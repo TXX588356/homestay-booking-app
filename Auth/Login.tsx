@@ -36,6 +36,8 @@ const AuthScreen = ({ navigation }: Props) => {
         phoneNumber: '',
     });
 
+
+
     const handleSubmit = () => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -58,6 +60,16 @@ const AuthScreen = ({ navigation }: Props) => {
             return;
         }
 
+        if(formData.fullName.length < 3) {
+            Alert.alert("Invalid Full Name" ,"Name need to have at least 3 character.", [{ text: 'OK' }]);
+            return;
+        }else if(formData.fullName.length > 50) {
+            Alert.alert('Name is too long', 'Only maximum of 50 characters are allowed for full name.', [{ text: 'OK' }]);
+                return;
+        }
+
+
+
         if (formData.password !== formData.confirmPassword) {
             Alert.alert('Password Mismatch', 'Your passwords do not match. Please try again.', [{ text: 'OK' }]);
             return;
@@ -73,7 +85,7 @@ const AuthScreen = ({ navigation }: Props) => {
             return;
         }
 
-        navigation.navigate('Home'); 
+        navigation.navigate('Main'); 
 };
 
     return (
