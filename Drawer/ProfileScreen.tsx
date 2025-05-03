@@ -1,16 +1,65 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useEffect } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { ExternalStyles } from '../Styles'
 import {Avatar, Title, Caption, TouchableRipple } from 'react-native-paper'; 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { User } from '../services/db-service'
+import { useIsFocused } from '@react-navigation/native'
 
 
 
  
 const Profile = () => {
   const navigation = useNavigation();
+  const [userData, setUserData] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    const fetchUser = async() => {
+      try{
+        setLoading(true);
+        const userDataString = await AsyncStorage.getItem('currentUser');
+
+        if(userDataString) {
+          const userData = JSON.parse(userDataString);
+          setUserData(userData);
+        }
+      }catch(error){
+        console.error("Error in fetching user data: ", error);
+      }finally{
+        setLoading(false);
+      }
+    }
+
+    if(isFocused) {
+      fetchUser();
+    }
+  }, [isFocused])
+
+  const handleLogout = async () => {
+    try {
+      await AsyncStorage.removeItem('currentUser');
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'Auth'}],
+      });
+      
+    }catch(error){
+      console.error("Error during logout: ", error);
+    }
+  }
+
+  if(loading) {
+    return (
+      <View style={[ExternalStyles.container, { justifyContent: 'center', alignItems: 'center' }]}>
+        <ActivityIndicator size="large" color="#ff5a5f" />
+      </View>
+    )
+  }
 
   
   return (
@@ -22,8 +71,8 @@ const Profile = () => {
             size={80}
           />
           <View style={{marginLeft: 25}}>
-            <Title style={[styles.title, {marginTop: 10}]}>John Doe</Title>
-            <Caption style={styles.caption}>john@gmail.com</Caption>
+            <Title style={[styles.title, {marginTop: 10}]}>{userData.name}</Title>
+            <Caption style={styles.caption}>{userData.email}</Caption>
           </View>
         </View>
       </View>
@@ -45,7 +94,7 @@ const Profile = () => {
           color="#777777"
           marginRight={20}
           />
-          <Text>john@gmail.com</Text>
+          <Text>{userData.email}</Text>
         </View>
         <View style={styles.row}>
           <Ionicons 
@@ -54,7 +103,7 @@ const Profile = () => {
           color="#777777"
           marginRight={20}
           />
-          <Text>01234567890</Text>
+          <Text>{userData.phoneNumber}</Text>
         </View>
       </View>
 
@@ -75,12 +124,7 @@ const Profile = () => {
       <View style={{alignItems: 'center'}}>
         <TouchableOpacity 
         style={[ExternalStyles.button, {width: "60%"}]}
-        onPress={() => {
-          navigation.reset({
-            index: 0,
-            routes: [{name: 'Auth'}],
-          });
-        }}
+        onPress= {handleLogout}
         >
           <Text style={{color: 'white', fontWeight: 'bold'}}>Log Out</Text>                     
         </TouchableOpacity>

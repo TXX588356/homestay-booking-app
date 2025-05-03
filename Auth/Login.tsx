@@ -6,6 +6,8 @@ import { RootStackParamList } from "../Types";
 import { ExternalStyles } from "../Styles";
 import MyButton from "../components/MyButton";
 import { useRoute } from '@react-navigation/native';
+import { getDBConnection, createUser, validateUser, User } from "../db-service";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface FormData {
     fullName: string;
@@ -19,6 +21,8 @@ export type Props = StackScreenProps<RootStackParamList, 'AuthScreen'>;
 
 const AuthScreen = ({ navigation }: Props) => {
     const route = useRoute<Props['route']>();
+    const [isNewUser, setIsNewUser] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
         if (route.params?.mode === 'login') {
           setIsNewUser(false);
@@ -26,7 +30,7 @@ const AuthScreen = ({ navigation }: Props) => {
           setIsNewUser(true);
         }
       }, [route.params]);
-    const [isNewUser, setIsNewUser] = useState(true);
+   
 
     const [formData, setFormData] = useState<FormData>({
         fullName: '',
@@ -38,54 +42,116 @@ const AuthScreen = ({ navigation }: Props) => {
 
 
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
+        setIsLoading(true);
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-        // Validation for Login
-        if (!isNewUser) {
-            if (!formData.email || !formData.password) {
-                Alert.alert('Some fields are blank', 'Please enter your email and password.', [{ text: 'OK' }]);
-                return;
-            } else if (!emailRegex.test(formData.email)) {
-                Alert.alert('Invalid Email', 'Please enter a valid email format.', [{ text: 'OK' }]);
+        try{
+            const db = await getDBConnection();
+
+            // Validation for Login
+            if (!isNewUser) {
+                if (!formData.email || !formData.password) {
+                    Alert.alert('Some fields are blank', 'Please enter your email and password.', [{ text: 'OK' }]);
+                    setIsLoading(false);
+                    return;
+                } else if (!emailRegex.test(formData.email)) {
+                    Alert.alert('Invalid Email', 'Please enter a valid email format.', [{ text: 'OK' }]);
+                    setIsLoading(false);
+                    return;
+                }
+
+                //validate user information
+                const user = await validateUser(db, formData.email, formData.password);
+
+                if(user) {
+                    //save info into asyncStorage 
+                    await AsyncStorage.setItem('currentUser', JSON.stringify(user));
+                    navigation.navigate('Main');
+                }else {
+                    Alert.alert('Login Failed', 'Invalid email or password', [{text: 'OK'}]);
+                }
+                setIsLoading(false);
                 return;
             }
-            navigation.navigate('Main');
-            return;
-        }
 
-        // Validation for Registration
-        if (!formData.fullName || !formData.email || !formData.password || !formData.confirmPassword || !formData.phoneNumber) {
-            Alert.alert('Some fields are blank', 'Please fill up all fields.', [{ text: 'OK' }]);
-            return;
-        }
-
-        if(formData.fullName.length < 3) {
-            Alert.alert("Invalid Full Name" ,"Name need to have at least 3 character.", [{ text: 'OK' }]);
-            return;
-        }else if(formData.fullName.length > 50) {
-            Alert.alert('Name is too long', 'Only maximum of 50 characters are allowed for full name.', [{ text: 'OK' }]);
+            // Validation for Registration
+            if (!formData.fullName || !formData.email || !formData.password || !formData.confirmPassword || !formData.phoneNumber) {
+                Alert.alert('Some fields are blank', 'Please fill up all fields.', [{ text: 'OK' }]);
+                setIsLoading(false);
                 return;
+            }
+
+            if(formData.fullName.length < 3) {
+                Alert.alert("Invalid Full Name" ,"Name need to have at least 3 character.", [{ text: 'OK' }]);
+                setIsLoading(false);
+                return;
+            }else if(formData.fullName.length > 50) {
+                Alert.alert('Name is too long', 'Only maximum of 50 characters are allowed for full name.', [{ text: 'OK' }]);
+                setIsLoading(false);
+                return;
+            }
+
+
+
+            if (formData.password !== formData.confirmPassword) {
+                Alert.alert('Password Mismatch', 'Your passwords do not match. Please try again.', [{ text: 'OK' }]);
+                setIsLoading(false);
+                return;
+            }
+
+            if (!emailRegex.test(formData.email)) {
+                Alert.alert('Invalid Email', 'Please enter a valid email format.', [{ text: 'OK' }]);
+                setIsLoading(false);
+                return;
+            }
+
+            if (!/^\d{10,15}$/.test(formData.phoneNumber)) {
+                Alert.alert('Invalid Phone Number', 'Please enter a valid phone number.', [{ text: 'OK' }]);
+                setIsLoading(false);
+                return;
+            }
+
+            //create new user if no error
+            const newUser: User = {
+                name: formData.fullName,
+                email: formData.email,
+                password: formData.password,
+                phoneNumber: formData.phoneNumber,
+            };
+
+            const userCreated = await createUser(db, newUser);
+
+            if (userCreated) {
+                Alert.alert('Success', 'Registration successful! You can now login.', [{ 
+                    text: 'OK',
+                    onPress: () => {
+                        setIsNewUser(false);
+                        setFormData({
+                            fullName: '',
+                            email: '',          
+                            password: '',     
+                            confirmPassword: '',
+                            phoneNumber: ''
+                          });
+                    }
+                }]);
+            } else {
+                Alert.alert('Registration Failed', 'Email is already registered or there was a database error.', [{ text: 'OK' }]);
+            }
+
+        }catch(error) {
+            console.error("Error: ", error);
+            Alert.alert('Error', 'An unexpected error occurred.', [{ text: 'OK' }]);
+        }finally{
+            setIsLoading(false);
         }
 
+        
 
+        
 
-        if (formData.password !== formData.confirmPassword) {
-            Alert.alert('Password Mismatch', 'Your passwords do not match. Please try again.', [{ text: 'OK' }]);
-            return;
-        }
-
-        if (!emailRegex.test(formData.email)) {
-            Alert.alert('Invalid Email', 'Please enter a valid email format.', [{ text: 'OK' }]);
-            return;
-        }
-
-        if (!/^\d{10,15}$/.test(formData.phoneNumber)) {
-            Alert.alert('Invalid Phone Number', 'Please enter a valid phone number.', [{ text: 'OK' }]);
-            return;
-        }
-
-        navigation.navigate('Main'); 
+        //navigation.navigate('Main'); 
 };
 
     return (
@@ -153,7 +219,7 @@ const AuthScreen = ({ navigation }: Props) => {
                         </View>
                     )}
                     
-                    <MyButton onPress={handleSubmit} title={isNewUser? 'Register' : 'Login'} textStyle={{ color: 'white', fontWeight: 'bold' }}/>
+                    <MyButton onPress={handleSubmit} title={isNewUser? 'Register' : 'Login'} textStyle={{ color: 'white', fontWeight: 'bold' }} disabled={isLoading}/>
 
                     <View style={styles.signInContainer}>
                         <Text style={{ fontWeight: 'bold', fontFamily: 'Montserrat-Bold' }}>

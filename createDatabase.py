@@ -1,13 +1,12 @@
 import sqlite3
 db = sqlite3.connect('users.sqlite')
 
-db.execute('DROP TABLE IF EXISTS users')
 
-db.execute('''CREATE TABLE users(
+db.execute('''CREATE TABLE IF NOT EXISTS users(
     id integer PRIMARY KEY AUTOINCREMENT,
     name text NOT NULL,
     email text NOT NULL,
-    password integer NOT NULL,
+    password text NOT NULL,
     phoneNumber text NOT NULL
 )''')
 
