@@ -9,6 +9,7 @@ import BackButton from '../../components/BackButton';
 import { RadioButton } from 'react-native-paper';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import LoadingIndicator, { useTransitionLoading } from '../../components/LoadingIndicator';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import BottomSheet from '@gorhom/bottom-sheet';
 
@@ -17,6 +18,7 @@ import BottomSheet from '@gorhom/bottom-sheet';
 type Props = StackScreenProps<RootStackParamList, 'PaymentMethod'>;
 
 const PaymentMethodScreen = ({route, navigation}: Props) => {
+
     const [selectedMethod, setSelectedMethod] = useState();
     const [cardNumber, setCardNumber] = useState('');
     const [cardName, setCardName] = useState('');
@@ -85,6 +87,7 @@ const PaymentMethodScreen = ({route, navigation}: Props) => {
 
 
     const handlePayment = () => {
+      saveBookingDetailsToDB();
       if (selectedMethod === 'card') {
         if (validateCardForm()) {
           Alert.alert("Payment Successful", "Redirecting to home screen...", [{text: "OK", onPress: () => navigation.navigate('HomeScreen')}])
@@ -98,6 +101,42 @@ const PaymentMethodScreen = ({route, navigation}: Props) => {
       }
     };
 
+    const saveBookingDetailsToDB = () => {
+      
+      AsyncStorage.getItem('currentUser')
+      .then((userString) => {
+        if (userString) {
+          const user = JSON.parse(userString);
+          const userID = user.id;
+          const {propertyID, startDate, endDate, numGuests, numDays} = route.params;
+
+          const bookingData = {
+            userID: parseInt(userID),
+            propertyID,
+            startDate,
+            endDate,
+            numGuests,
+            numDays,
+            paymentMethod: selectedMethod
+          };
+
+          fetch('http://10.0.2.2:5000/api/bookingHistory', {  // Replace with your LAN IP!
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(bookingData),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log('Booking created:', data);
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            })
+      }})
+      .catch((error) => {
+        console.error('Error reading AsyncStorage:', error);
+      });
+    };
 
     const renderContent = () => {
         switch (selectedMethod) {
@@ -165,7 +204,9 @@ const PaymentMethodScreen = ({route, navigation}: Props) => {
                         <MyButton
                          title="Confirm Payment"
                          textStyle={{ color: 'white' }}
-                         onPress={handlePayment}
+                         onPress={() => {
+                          handlePayment();
+                        }}
                           />
                         </View>
                 )
@@ -220,6 +261,7 @@ const PaymentMethodScreen = ({route, navigation}: Props) => {
         }
        
     };
+
   return (
     <>
     <ScrollView style={ExternalStyles.container}>
@@ -274,4 +316,4 @@ const PaymentMethodScreen = ({route, navigation}: Props) => {
   )
 }
 
-export default PaymentMethodScreen
+export default PaymentMethodScreen;
