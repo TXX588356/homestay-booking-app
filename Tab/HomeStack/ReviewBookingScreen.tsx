@@ -13,7 +13,7 @@ import LoadingIndicator, { useTransitionLoading } from '../../components/Loading
 type Props = StackScreenProps<RootStackParamList, 'ReviewBookingScreen'>;
 
 const ReviewBookingScreen = ({route, navigation}: Props) => {
-  
+
   const {property, startDate, endDate, numGuests} = route.params;
   let numOfDays;
   const startDateObj = new Date(startDate);
@@ -29,7 +29,7 @@ const ReviewBookingScreen = ({route, navigation}: Props) => {
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;
   };
-
+  
   const loading = useTransitionLoading(navigation);
 
   const serviceFees = numOfDays * property.price * 0.10;
@@ -78,11 +78,14 @@ const ReviewBookingScreen = ({route, navigation}: Props) => {
         <MyButton
           title="Next"
           textStyle={{ color: 'white', fontWeight: 'bold' }}
-          onPress={() => navigation.navigate('PaymentMethod')}
+          onPress={() => navigation.navigate('PaymentMethod', {
+            propertyID: property.id, startDate: formatDate(startDateObj), endDate: formatDate(endDateObj), 
+            numGuests: numGuests, numDays: numOfDays
+          })}
         />
       </View>
     </ScrollView>
   )
 }
 
-export default ReviewBookingScreen
+export default ReviewBookingScreen;
