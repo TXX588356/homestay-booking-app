@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import {
     View,
-    Text,
-    TextInput,
     TouchableOpacity,
     StyleSheet,
     ScrollView,
@@ -12,11 +10,12 @@ import {
     FlatList,
     Button,
   } from 'react-native';
+  import { useTheme, Text, TextInput, Card } from 'react-native-paper'; 
 import type { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../Types'; 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import PropertyCard from './PropertyCard';
+import PropertyCard from '../../components/PropertyCard';
 import CategoryScreen from './CategoryScreen';
 import { allProperties } from '../../properties';
 import { ExternalStyles } from '../../Styles';
@@ -37,6 +36,8 @@ type PropertyType = {
 }
 
 const App = ({ route, navigation}: Props) => {
+    const {colors} = useTheme();
+
     const [category, setCategory] = useState([
         { cat: 'Beach', icon: 'umbrella-beach', key: '1', iconColor: '#FF5733', bgColor: '#FFE5D9' },
         { cat: 'Mountain', icon: 'mountain', key: '2', iconColor: '#4CAF50', bgColor: '#DFF2BF' },
@@ -64,17 +65,19 @@ const App = ({ route, navigation}: Props) => {
     const [searchQuery, setSearchQuery] = useState<any>('');
    
     return ( 
-        <ScrollView style={ExternalStyles.container}>
-            <View style={styles.container}>
+        <ScrollView style={[ExternalStyles.container, {backgroundColor: 'white'}]}>
+            <View style={{backgroundColor: "white", margin: 10, marginTop: 20}}>
 
                 <View>
-                    <Text style={styles.headerText}>
+                    <Text variant = "headlineLarge" style={[ExternalStyles.headerText, {color:colors.primary}]}>
                         HomeStay App
                     </Text>
-                    <Text style={{fontFamily: 'Montserrat-Regular'}}>Find your perfect stay</Text>
+                    <Text style={{fontFamily: 'Montserrat-Regular'}}>
+                        Find your perfect stay
+                    </Text>
                 </View>
                 
-               <View style={styles.searchArea}>
+                <View style={[ExternalStyles.searchArea, { width: windowWidth * 0.9, backgroundColor: colors.surface }]}>
                     <Ionicons
                         name= 'search'
                         color= 'grey'
@@ -82,15 +85,18 @@ const App = ({ route, navigation}: Props) => {
                         style={{marginRight: 10}}
                     />  
                     <TextInput 
-                        style={styles.searchBar}
+                        style={{ flex: 1, backgroundColor: 'transparent' }}
                         placeholder= 'Where are you going?'
                         value={searchQuery}
+                        underlineColor="transparent"
+                        activeUnderlineColor='transparent'
+                        placeholderTextColor={colors.outline}
                         onChangeText={text => setSearchQuery(text)}
                     />
                </View>
 
-               <View style={styles.mainHeader}>
-                    <Text style={styles.subHeaderText}>Browse by Category</Text>
+               <View>
+               <Text variant="titleLarge" style={[ExternalStyles.subHeaderText, { color: colors.primary }]}>Browse by Category</Text>
 
                     <FlatList
                         data={category}
@@ -99,21 +105,21 @@ const App = ({ route, navigation}: Props) => {
                         showsHorizontalScrollIndicator={false}
                         renderItem={({ item }) => (
                             <TouchableOpacity 
-                                style={styles.categoryItem}
+                                style={{ padding: 5}}
                                 onPress={() => navigation.navigate('CategoryScreen', {catName: item.cat})}
                                 >
-                                <View style={[styles.iconContainer, { backgroundColor: item.bgColor}]}>
-                                    <FontAwesome5 name={item.icon} size={30} color={item.iconColor} style={styles.categoryIcon} />
+                                <View style={{ borderRadius: 15, backgroundColor: item.bgColor}}>
+                                    <FontAwesome5 name={item.icon} size={30} color={item.iconColor} style={{margin: 10, padding: 8,}} />
                                 </View>
             
-                                <Text style={styles.categoryText}>{item.cat}</Text>
+                                <Text style={{ color: colors.onBackground, textAlign: 'center', fontFamily: 'Montserrat-Medium', }}>{item.cat}</Text>
                             </TouchableOpacity>
                         )}
                     />
                </View>
 
-               <View style={styles.mainHeader}>
-                    <Text style={styles.subHeaderText}>Recommended for you</Text>
+               <View>
+               <Text variant="titleLarge" style={[ExternalStyles.subHeaderText, { color: colors.primary }]}>Recommended for you</Text>
                     {recommended.map((item) => (
                         <PropertyCard
                             key={item.id}
@@ -127,66 +133,10 @@ const App = ({ route, navigation}: Props) => {
                </View>
             </View>
         </ScrollView>
-        //           <Button title="5 Stars Hotel" onPress={() => {navigation.navigate('PropertyDetails', {img: require('../../img/caption.jpg')})}}/>
 
         
     );
 }
-
-const styles = StyleSheet.create({
-    headerText: {
-        fontSize: 25,
-        fontWeight: 'bold',
-        color: 'black',
-        fontFamily: 'Montserrat-Bold',
-    },
-    subHeaderText: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: 'black',
-        marginTop: 10,
-        marginBottom: 10,
-        fontFamily: 'Montserrat-Bold',
-    },
-    container: {
-        margin: 10,
-        marginTop: 20,
-    },
-    searchArea: {
-        marginTop: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
-        width: windowWidth * 0.9, 
-        height: 45,
-        backgroundColor: '#fff',
-        borderRadius: 20, 
-        paddingHorizontal: 15,
-        fontSize: 16,
-        elevation: 4, 
-        shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-    },
-    searchBar: {
-        flex: 1,
-        fontSize: 16,
-    },
-    categoryIcon: {
-        margin: 10,
-        padding: 8,
-    },
-    iconContainer: {
-        borderRadius: 15,
-    },
-    categoryItem: {
-        padding: 5,
-    },
-    categoryText: {
-        textAlign: 'center',
-        color: 'black',
-        fontFamily: 'Montserrat-Medium',
-    },
-})
 
 
 export default App;

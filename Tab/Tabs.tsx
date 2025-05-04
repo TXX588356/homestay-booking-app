@@ -12,13 +12,16 @@ const Tab = createBottomTabNavigator();
 
 const TabNavigator = ({ navigation, route }) => {
 
+  
+  
+
   //to get dynamic header title based on focused screen
   function getHeaderTitle(route) {
     const routeName = getFocusedRouteNameFromRoute(route) ?? 'Explore';
 
     switch (routeName) {
       case 'Explore':
-        return 'Explore';
+        return '';
       case 'Wishlist':
         return 'Wishlist';
       case 'Trip':
@@ -47,6 +50,7 @@ const TabNavigator = ({ navigation, route }) => {
         name="Explore"
         component={HomeStack}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="search-outline" size={20} color={color} />
           )

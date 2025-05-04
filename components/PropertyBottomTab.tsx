@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 type Props = {
     propertyData: any,
@@ -10,7 +11,12 @@ type Props = {
 };
 
 const PropertyBottomTab = ({propertyData, addToWishlist}: Props) => {
+    const navigation = useNavigation();
     const [liked, setLiked] = useState(false);
+
+    const handleReserve = () => {
+        navigation.navigate('BookingScreen', {property: propertyData});
+    };
 
     const handlePress = () => {
         setLiked(!liked);
@@ -23,7 +29,7 @@ const PropertyBottomTab = ({propertyData, addToWishlist}: Props) => {
     return (
         <View style={styles.bottomContainer}>
             <View style={styles.innerContainer}>
-                <View style={styles.left}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <Pressable onPress={handlePress}>
                         <Ionicons
                         name={liked ? 'heart' : 'heart-outline'}
@@ -34,8 +40,8 @@ const PropertyBottomTab = ({propertyData, addToWishlist}: Props) => {
                     <Text style={[{marginLeft: 10}, styles.textStyle]}>RM{propertyData.price}</Text>
                     <Text style={{marginLeft: 5, marginTop: 6, color: 'black'}}>per night</Text>
                 </View>
-                <View style={styles.right}>
-                    <TouchableOpacity style={styles.bookButton}>
+                <View style={{ flexDirection: 'row', marginRight: 20, justifyContent: 'center', alignItems: 'center',}}>
+                    <TouchableOpacity style={styles.bookButton} onPress={handleReserve}>
                         <Text style={styles.buttonText}>Reserve</Text>
                     </TouchableOpacity>
                 </View>
@@ -63,17 +69,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flexDirection: 'row',
         alignItems: 'center',
-    },
-    left: {
-        flexDirection: 'row',
-        alignItems: 'center'
-    }, 
-    right: {
-        flexDirection: 'row',
-        marginRight: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-
     },
     textStyle: {
         color: 'black',

@@ -2,7 +2,7 @@ import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import React from 'react';
 import { RootStackParamList } from '../../Types';
 import { allProperties } from '../../properties';
-import PropertyCard from './PropertyCard';
+import PropertyCard from '../../components/PropertyCard';
 import { StackScreenProps } from '@react-navigation/stack';
 
 type CategoryProps = StackScreenProps<RootStackParamList, 'CategoryScreen'>;

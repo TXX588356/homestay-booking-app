@@ -8,6 +8,54 @@ export const ExternalStyles = StyleSheet.create({
     SubHeader: {
         backgroundColor: '#ff5a5f',
     },
+    headerText: {
+        fontSize: 25,
+        fontWeight: 'bold',
+        color: 'black',
+        fontFamily: 'Montserrat-Bold',
+    },
+    subHeaderText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'black',
+        marginTop: 10,
+        marginBottom: 10,
+        fontFamily: 'Montserrat-Bold',
+    },
+    titleText: {
+        fontSize: 25,
+        color: 'black',
+        fontFamily: 'Montserrat-Bold',
+    },
+    subTitle: {
+        fontFamily: 'Montserrat-Medium'
+    },
+
+    sectionTitle: {
+        fontSize: 18,
+        color: 'black',
+        fontFamily: 'Montserrat-Bold', 
+    },
+    label: {
+        fontFamily: 'Montserrat-Medium',
+        fontWeight: '700',
+        color: 'black',
+    },
+
+    searchArea: {
+        marginTop: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+        height: 45,
+        backgroundColor: '#fff',
+        borderRadius: 20, 
+        paddingHorizontal: 15,
+        fontSize: 16,
+        elevation: 4, 
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+    },
 
     button: {
         backgroundColor: '#ff5a5f',
@@ -16,6 +64,97 @@ export const ExternalStyles = StyleSheet.create({
         marginTop: 30,
         marginBottom: 20,
         borderRadius: 8,
+    },
+
+    propertyName: {
+        color: 'black',
+        fontSize: 15,
+        fontFamily: 'Montserrat-Bold'
+    },
+    propertyPrice: {
+        color: "#ff5a5f",
+        fontFamily: 'Montserrat-Bold',
+    },
+    propertyLocation: {
+        color: 'grey',
+        fontFamily: 'Montserrat-Medium'
+    },
+    stayImage: {
+        height: 130,
+        width: "100%",
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+    },
+    propertyCardContainer: {
+        width: "95%",
+        height: 200,
+        elevation: 5,
+        borderRadius: 10,
+        marginVertical: 7,
+        backgroundColor: '#fff',
+        alignSelf: 'center',
+    },
+
+    priceRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginVertical: 5
+      },
+      totalRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 15,
+        borderTopWidth: 1,
+        borderTopColor: '#ddd',
+        paddingTop: 10
+      },
+
+   
+
+
+    //PropertyDetails Screen
+    propertyTitle: {
+        alignItems: 'center',
+    }, 
+    ContainerWithUnderline: {
+        margin: 20,
+        paddingBottom: 10,
+        borderBottomColor: '#D3D3D3',
+        borderBottomWidth: 1
+    },
+    
+    sectionContainer: {
+        margin: 20,
+    },
+    selectedsectionContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderWidth: 1,
+        padding: 5,
+        borderColor: '#D3D3D3'
+    },
+    date: {
+        color: 'black',
+        fontFamily: 'Montserrat-Medium',
+    },
+    descContainer: {
+        margin: 20,
+        paddingBottom: 10,
+        borderBottomColor: '#D3D3D3',
+        borderBottomWidth: 1
+    },
+    
+    backButtonContainer: {
+        position: 'absolute',
+        top: 10,
+        left: 10,
+        zIndex: 10,
+      },
+      
+    backButton: {
+    backgroundColor: 'rgba(205, 192, 192, 0.5)',
+    padding: 8,
+    borderRadius: 20,
     },
 
 });

@@ -10,12 +10,27 @@ export type RootStackParamList = {
   Trip: {display: string};
   HomestayDetails: {display: string};
   Booking: {display: string};
-  Payment: {display: string};
+  ReviewBookingScreen: {
+    property: any;
+    startDate: string;
+    endDate: string;
+    numGuests: number;
+  };
+  PaymentMethod: {
+    property: any;
+    startDate: string;
+    endDate: string;
+    numGuests: number;
+    numOfDays: number;
+    totalPrice: number;
+  }
   List: {display: string};
   Authentication: {display: string},
   CategoryScreen: {catName: string},
   PropertyDetails: {data: any};
   WelcomeScreen: {display: string},
+  BookingScreen: {property: any},
+  
 
 };
 

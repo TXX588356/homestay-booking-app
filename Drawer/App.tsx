@@ -10,14 +10,15 @@ const Drawer = createDrawerNavigator ();
 
 const DrawerNavigator = () => {
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator
+    screenOptions={{drawerType: 'slide'}}>
         <Drawer.Screen
           name="Home"
           component={TabNavigator}
           options={{
             title: 'Home',
             unmountOnBlur:true,
-            drawerIcon: ({color}) => <Ionicons name="home" size={22} color={color} />,
+            drawerIcon: ({color}) => <Ionicons name="home" size={22} color={color} />
           }}
         />
         <Drawer.Screen name="Profile" component={ProfileScreen} options={{drawerIcon: ({color}) => <Ionicons name="person-circle" size={22} color={color}/>,}}/>
