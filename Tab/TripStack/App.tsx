@@ -9,7 +9,7 @@ const TripStack = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="TripScreen" component={TripScreen}/>
-        <Stack.Screen name="Trip Details" component={TripDetails}/>
+        <Stack.Screen name="TripDetails" component={TripDetails}/>
     </Stack.Navigator>
   )
 }
