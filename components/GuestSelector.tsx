@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { ExternalStyles } from '../Styles';
 import CounterButton from './CounterButton';
+import ThemedText from './ThemedText';
+import { ThemeContext } from '../util/ThemeManager';
 
 interface GuestType {
   label: string;
@@ -16,6 +18,7 @@ type GuestSelectorProps = {
 }
 
 const GuestSelector= ({ onGuestsChange }: GuestSelectorProps) => {
+  const { theme } = useContext(ThemeContext);
   const [guestTypes, setGuestTypes] = useState([
     { label: 'Adults', count: 1, min: 1, max: 5, description: 'Ages 13 or above' },
     { label: 'Children', count: 0, min: 0, max: 5, description: 'Ages 2-12' },
@@ -43,7 +46,7 @@ const GuestSelector= ({ onGuestsChange }: GuestSelectorProps) => {
   };
 
   return (
-    <View style={ExternalStyles.container}>
+    <View style={[ExternalStyles.container,{backgroundColor: theme.background}]}>
       {guestTypes.map((guestType, index) => (
         <View key={guestType.label} style={{
           flexDirection: 'row',
@@ -54,8 +57,8 @@ const GuestSelector= ({ onGuestsChange }: GuestSelectorProps) => {
           borderBottomColor: '#f0f0f0',
           }}>
           <View>
-            <Text style={ExternalStyles.label}>{guestType.label}</Text>
-              <Text style={{fontSize: 12}}>{guestType.description}</Text>
+            <ThemedText style={ExternalStyles.label}>{guestType.label}</ThemedText>
+              <ThemedText style={{fontSize: 12}}>{guestType.description}</ThemedText>
           </View>
           <View style={{ flexDirection: 'row',alignItems: 'center',}}>
           <CounterButton
@@ -64,7 +67,7 @@ const GuestSelector= ({ onGuestsChange }: GuestSelectorProps) => {
               disabled={guestType.count <= guestType.min}
               isDisabledCondition={guestType.count <= guestType.min}
           />
-            <Text style={{marginHorizontal: 15, fontWeight: 'bold', color: 'black'}}>{guestType.count}</Text>
+            <ThemedText style={{marginHorizontal: 15, fontWeight: 'bold'}}>{guestType.count}</ThemedText>
            <CounterButton
               label="+"
               onPress={()=> handleCountChange(index,true)}

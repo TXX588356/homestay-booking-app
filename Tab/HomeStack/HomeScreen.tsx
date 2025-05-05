@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
     View,
     TouchableOpacity,
@@ -19,6 +19,9 @@ import PropertyCard from '../../components/PropertyCard';
 import CategoryScreen from './CategoryScreen';
 import { allProperties } from '../../properties';
 import { ExternalStyles } from '../../Styles';
+import { ThemeContext } from '../../util/ThemeManager';
+import { ToggleButton } from '../../App';
+import ThemedText from '../../components/ThemedText';
 
 
 
@@ -63,18 +66,21 @@ const App = ({ route, navigation}: Props) => {
 
 
     const [searchQuery, setSearchQuery] = useState<any>('');
+
+    const {theme} = useContext(ThemeContext);
    
     return ( 
-        <ScrollView style={[ExternalStyles.container, {backgroundColor: 'white'}]}>
-            <View style={{backgroundColor: "white", margin: 10, marginTop: 20}}>
+        <ScrollView style={[ExternalStyles.container, {backgroundColor: theme.background}]}>
+            <View style={[{margin: 10, marginTop: 20}]}>
 
                 <View>
                     <Text variant = "headlineLarge" style={[ExternalStyles.headerText, {color:colors.primary}]}>
                         HomeStay App
                     </Text>
-                    <Text style={{fontFamily: 'Montserrat-Regular'}}>
+                    
+                    <ThemedText style={{fontFamily: 'Montserrat-Regular'}}>
                         Find your perfect stay
-                    </Text>
+                    </ThemedText>
                 </View>
                 
                 <View style={[ExternalStyles.searchArea, { width: windowWidth * 0.9, backgroundColor: colors.surface }]}>
@@ -112,7 +118,7 @@ const App = ({ route, navigation}: Props) => {
                                     <FontAwesome5 name={item.icon} size={30} color={item.iconColor} style={{margin: 10, padding: 8,}} />
                                 </View>
             
-                                <Text style={{ color: colors.onBackground, textAlign: 'center', fontFamily: 'Montserrat-Medium', }}>{item.cat}</Text>
+                                <ThemedText style={{ textAlign: 'center', fontFamily: 'Montserrat-Medium', }}>{item.cat}</ThemedText>
                             </TouchableOpacity>
                         )}
                     />

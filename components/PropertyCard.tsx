@@ -1,8 +1,9 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ExternalStyles } from '../Styles';
+import { ThemeContext } from '../util/ThemeManager';
 
 type PropertyProps = {
     name: string;
@@ -13,6 +14,7 @@ type PropertyProps = {
 }
 
 const PropertyCard = ({name, location, price, images, onPress}: PropertyProps) => {
+  const {theme} = useContext(ThemeContext);
   return (
     <TouchableOpacity style={ExternalStyles.propertyCardContainer} onPress={onPress}>
         <View style={{borderRadius: 10, overflow: "hidden"}}>

@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useContext, useMemo, useRef, useState } from 'react';
 import { View, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { Text, Button,TextInput, HelperText } from 'react-native-paper';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -10,14 +10,16 @@ import { RadioButton } from 'react-native-paper';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import LoadingIndicator, { useTransitionLoading } from '../../components/LoadingIndicator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import BottomSheet from '@gorhom/bottom-sheet';
 import config from "../../config";
+import { ThemeContext } from '../../util/ThemeManager';
+import ThemedText from '../../components/ThemedText';
 
 
 type Props = StackScreenProps<RootStackParamList, 'PaymentMethod'>;
 
 const PaymentMethodScreen = ({route, navigation}: Props) => {
+    const { theme } = useContext(ThemeContext);
 
     const [selectedMethod, setSelectedMethod] = useState();
     const [cardNumber, setCardNumber] = useState('');
@@ -143,7 +145,7 @@ const PaymentMethodScreen = ({route, navigation}: Props) => {
         switch (selectedMethod) {
             case 'card':
                 return(
-                    <View style={ExternalStyles.sectionContainer}>
+                    <View style={[ExternalStyles.sectionContainer]}>
                         <Text style={ExternalStyles.sectionTitle}>Add Card Details</Text>
 
                         <TextInput
@@ -265,12 +267,12 @@ const PaymentMethodScreen = ({route, navigation}: Props) => {
 
   return (
     <>
-    <ScrollView style={ExternalStyles.container}>
+    <ScrollView style={[ExternalStyles.container, {backgroundColor: theme.background}]}>
         <View style={ExternalStyles.backButtonContainer}>
         <BackButton/>
         </View>
         <View style={[ExternalStyles.sectionContainer, {paddingTop: 25}]}>
-          <Text style={ExternalStyles.headerText}>Add a Payment Method</Text>
+          <ThemedText style={ExternalStyles.headerText}>Add a Payment Method</ThemedText>
         </View>
 
         <RadioButton.Group onValueChange={value => setSelectedMethod(value)} value={selectedMethod}>
@@ -278,16 +280,16 @@ const PaymentMethodScreen = ({route, navigation}: Props) => {
             label="Credit / Debit Card"
             value="card"
             position="trailing"
-            labelStyle={{ fontSize: 16 }}
-            color='black'
+            labelStyle={{ fontSize: 16, color: theme.text }}
+            color= {theme.text}
           />
           
           <RadioButton.Item
             label="FPX Online Banking"
             value="fpx"
             position="trailing"
-            labelStyle={{ fontSize: 16 }}
-            color='black'
+            labelStyle={{ fontSize: 16, color: theme.text }}
+            color= {theme.text}
           />
         </RadioButton.Group>
 

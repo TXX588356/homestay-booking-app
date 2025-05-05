@@ -1,17 +1,27 @@
 import { View, Text } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import TabNavigator from '../Tab/Tabs';
 import ProfileScreen from './ProfileScreen';
 import SettingScreen from './SettingScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { ThemeContext } from '../util/ThemeManager';
 
 const Drawer = createDrawerNavigator ();
 
 const DrawerNavigator = () => {
+  const { theme } = useContext(ThemeContext);
   return (
     <Drawer.Navigator
-    screenOptions={{drawerType: 'slide'}}>
+    screenOptions={{
+      drawerType: 'slide',
+      drawerStyle: { backgroundColor: theme.background },
+      drawerActiveTintColor: theme.text,
+      drawerInactiveTintColor: theme.text,
+      headerStyle: { backgroundColor: theme.background },
+      headerTintColor: theme.text,
+    }}
+  >
         <Drawer.Screen
           name="Home"
           component={TabNavigator}

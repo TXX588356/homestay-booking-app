@@ -13,35 +13,33 @@ export const ExternalStyles = StyleSheet.create({
     headerText: {
         fontSize: 25,
         fontWeight: 'bold',
-        color: 'black',
         fontFamily: 'Montserrat-Bold',
     },
     subHeaderText: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: 'black',
         marginTop: 10,
         marginBottom: 10,
         fontFamily: 'Montserrat-Bold',
     },
     titleText: {
         fontSize: 25,
-        color: 'black',
         fontFamily: 'Montserrat-Bold',
     },
     subTitle: {
         fontFamily: 'Montserrat-Medium'
     },
+    inputContainer: {
+        marginBottom: 10,
+    },
 
     sectionTitle: {
         fontSize: 18,
-        color: 'black',
         fontFamily: 'Montserrat-Bold', 
     },
     label: {
         fontFamily: 'Montserrat-Medium',
         fontWeight: '700',
-        color: 'black',
     },
 
     searchArea: {
@@ -167,7 +165,6 @@ export const ExternalStyles = StyleSheet.create({
         borderColor: '#D3D3D3'
     },
     date: {
-        color: 'black',
         fontFamily: 'Montserrat-Medium',
     },
     descContainer: {
@@ -188,6 +185,40 @@ export const ExternalStyles = StyleSheet.create({
     backgroundColor: 'rgba(205, 192, 192, 0.5)',
     padding: 8,
     borderRadius: 20,
+    },
+
+    bottomContainer: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        height: 60,
+        backgroundColor: '#fff',
+        borderTopWidth: 1,
+        borderTopColor: '#ccc',
+        justifyContent: 'center',
+        paddingLeft: 20,
+    },
+    innerContainer: {
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    bookButton: {
+        height: 35,
+        backgroundColor: '#FF385C',
+        width: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 8,
+
+    },
+    buttonText: {
+        fontWeight: 'bold',
+        justifyContent: 'center',
+        color: '#fff',
+        fontFamily: 'Montserrat-Regular',
+
     },
 
 });

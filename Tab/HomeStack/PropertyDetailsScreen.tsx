@@ -1,5 +1,5 @@
 import { View, Text, Image, Button, Dimensions, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../Types';
 import { ExternalStyles } from '../../Styles';
@@ -11,6 +11,8 @@ import PropertyBottomTab from '../../components/PropertyBottomTab';
 import Calendar from '../../components/Calendar';
 import LoadingIndicator, { useTransitionLoading } from '../../components/LoadingIndicator';
 import BackButton from '../../components/BackButton';
+import { ThemeContext } from '../../util/ThemeManager';
+import ThemedText from '../../components/ThemedText';
 
 const { width } = Dimensions.get('window');
 
@@ -19,6 +21,8 @@ const PropertyDetailsScreen = ({route, navigation}: Props) => {
     const {data} = route.params;
 
     const loading = useTransitionLoading(navigation);
+
+     const { theme } = useContext(ThemeContext);
          
 
     if(loading) {
@@ -26,28 +30,28 @@ const PropertyDetailsScreen = ({route, navigation}: Props) => {
     }
     
     return(
-        <View style={ExternalStyles.container}>
-            <ScrollView style={ExternalStyles.container} contentContainerStyle={{paddingBottom: 100}} >
+        <View style={[ExternalStyles.container]}>
+            <ScrollView style={[ExternalStyles.container, {backgroundColor: theme.background}]} contentContainerStyle={{paddingBottom: 100}} >
             <View style={ExternalStyles.backButtonContainer}>
                 <BackButton/>
             </View>
                 <CustomCarousel data={data.images}/>
 
                 <View style={[ExternalStyles.propertyTitle, {paddingTop: 70}]}>
-                    <Text style={ExternalStyles.titleText}>{data.name}</Text>
-                    <Text style={ExternalStyles.subTitle}>{data.category} stay in {data.location}</Text>
+                    <ThemedText style={ExternalStyles.titleText}>{data.name}</ThemedText>
+                    <ThemedText style={ExternalStyles.subTitle}>{data.category} stay in {data.location}</ThemedText>
                 </View>
 
                 <View style={ExternalStyles.descContainer}>
-                    <Text style={ExternalStyles.sectionTitle}>About this place</Text>
-                    <Text style={{fontFamily: 'Montserrat-Medium', color: 'black'}}>{data.description}</Text>
+                    <ThemedText style={ExternalStyles.sectionTitle}>About this place</ThemedText>
+                    <ThemedText style={{fontFamily: 'Montserrat-Medium'}}>{data.description}</ThemedText>
 
                 </View>
 
                 <View style={ExternalStyles.ContainerWithUnderline}>
-                    <Text style={ExternalStyles.sectionTitle}>What this place offers</Text>
+                    <ThemedText style={ExternalStyles.sectionTitle}>What this place offers</ThemedText>
                     {data.amenities.map((amenity: string, index: number) => (
-                        <Text key={index} style={{fontSize: 16, marginVertical: 2, lineHeight: 25, color: 'black', fontFamily: 'Montserrat-Medium'}}>- {amenity}</Text>
+                        <ThemedText key={index} style={{fontSize: 16, marginVertical: 2, lineHeight: 25, fontFamily: 'Montserrat-Medium'}}>- {amenity}</ThemedText>
                     ))}
                 </View>
 

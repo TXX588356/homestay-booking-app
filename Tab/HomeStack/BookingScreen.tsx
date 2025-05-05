@@ -1,9 +1,9 @@
 import { View, Text, Image, Button, Dimensions, StyleSheet, TouchableOpacity, ScrollViewComponent, Alert } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../Types';
 import { ExternalStyles } from '../../Styles';
-import CustomCarousel from '../../components/CustomCarousel';
+import Carousel from '../../components/Carousel';
 import { ScrollView } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import PropertyBottomTab from '../../components/PropertyBottomTab';
@@ -12,6 +12,8 @@ import LoadingIndicator, { useTransitionLoading } from '../../components/Loading
 import BackButton from '../../components/BackButton';
 import GuestSelector from '../../components/GuestSelector';
 import MyButton from '../../components/MyButton';
+import { ThemeContext } from '../../util/ThemeManager';
+import ThemedText from '../../components/ThemedText';
 
 type Props = StackScreenProps<RootStackParamList, 'BookingScreen'>;
 
@@ -21,6 +23,7 @@ const BookingScreen = ({route, navigation}: Props) => {
       const [endDate, setEndDate] = useState<Date | null>(null);
       const [numGuests, setNumGuests] = useState(1);
 
+      const { theme } = useContext(ThemeContext);
       const loading = useTransitionLoading(navigation);
 
 
@@ -41,23 +44,23 @@ const BookingScreen = ({route, navigation}: Props) => {
 
     
   return (
-    <ScrollView style={[ExternalStyles.container]}>
+    <ScrollView style={[ExternalStyles.container, {backgroundColor: theme.background}]}>
       <View style={ExternalStyles.backButtonContainer}>
           <BackButton/>
        </View>
        
       <View style={[ExternalStyles.sectionContainer, {paddingTop: 25}]}>
-        <Text style={ExternalStyles.titleText}>You are now booking: {property.name}</Text>
+        <ThemedText style={ExternalStyles.titleText}>You are now booking: {property.name}</ThemedText>
       </View>
 
       <View style={ExternalStyles.ContainerWithUnderline}>
-        <Text style={ExternalStyles.sectionTitle}>Please Pick Your Date</Text>
+        <ThemedText style={ExternalStyles.sectionTitle}>Please Pick Your Date</ThemedText>
             <Calendar onDateChange={handleDateChange}/>
 
             {startDate && (
                 <View style={ExternalStyles.selectedsectionContainer}>
                     <Ionicons name={'calendar'} size={22} marginRight={5}/>    
-                    <Text style={ExternalStyles.date}>{startDate.toDateString()} - {endDate?.toDateString()}</Text>
+                    <ThemedText style={ExternalStyles.date}>{startDate.toDateString()} - {endDate?.toDateString()}</ThemedText>
                 </View>
             )}
 
@@ -66,7 +69,7 @@ const BookingScreen = ({route, navigation}: Props) => {
        
       
       <View style={ExternalStyles.ContainerWithUnderline}>
-        <Text style={ExternalStyles.sectionTitle}>Please Select Number of Guests</Text>
+        <ThemedText style={ExternalStyles.sectionTitle}>Please Select Number of Guests</ThemedText>
         <GuestSelector onGuestsChange={handleGuestsChange}/>
       </View>
       <View style={ExternalStyles.sectionContainer}>

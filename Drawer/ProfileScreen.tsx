@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ExternalStyles } from '../Styles'
 import {Avatar, Title, Caption, TouchableRipple } from 'react-native-paper'; 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -8,11 +8,15 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { User } from '../services/db-service'
 import { useIsFocused } from '@react-navigation/native'
+import { ThemeContext } from '../util/ThemeManager';
+import ThemedText from '../components/ThemedText';
 
 
 
  
 const Profile = () => {
+  const { theme } = useContext(ThemeContext);
+  
   const navigation = useNavigation();
   const [userData, setUserData] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
@@ -63,7 +67,7 @@ const Profile = () => {
 
   
   return (
-    <View style={ExternalStyles.container}>
+    <View style={[ExternalStyles.container, {backgroundColor: theme.background}]}>
       <View style={styles.userInfo}>
         <View style={{flexDirection: 'row', marginTop: 20}}>
           <Avatar.Image
@@ -71,8 +75,8 @@ const Profile = () => {
             size={80}
           />
           <View style={{marginLeft: 25}}>
-            <Title style={[styles.title, {marginTop: 10}]}>{userData.name}</Title>
-            <Caption style={styles.caption}>{userData.email}</Caption>
+            <Title style={[styles.title, {marginTop: 10, color: theme.text}]}>{userData.name}</Title>
+            <Caption style={styles.caption, {color: theme.text}}>{userData.email}</Caption>
           </View>
         </View>
       </View>
@@ -85,7 +89,7 @@ const Profile = () => {
           color="#777777"
           marginRight={20}
           />
-          <Text>Malaysia</Text>
+          <ThemedText>Malaysia</ThemedText>
         </View>
         <View style={styles.row}>
           <Ionicons 
@@ -94,7 +98,7 @@ const Profile = () => {
           color="#777777"
           marginRight={20}
           />
-          <Text>{userData.email}</Text>
+          <ThemedText>{userData.email}</ThemedText>
         </View>
         <View style={styles.row}>
           <Ionicons 
@@ -103,7 +107,7 @@ const Profile = () => {
           color="#777777"
           marginRight={20}
           />
-          <Text>{userData.phoneNumber}</Text>
+          <ThemedText>{userData.phoneNumber}</ThemedText>
         </View>
       </View>
 
@@ -112,12 +116,12 @@ const Profile = () => {
           borderRightColor: '#dddddd', 
           borderRightWidth: 1
           }]}>
-          <Text style={{fontSize: 20, fontWeight: 'bold', color: 'black'}}>10</Text>
-          <Text>Trips</Text>
+          <ThemedText style={{fontSize: 20, fontWeight: 'bold'}}>10</ThemedText>
+          <ThemedText>Trips</ThemedText>
         </View>
         <View style={styles.infoBox}>
-          <Text style={{fontSize: 20, fontWeight: 'bold', color: 'black'}}>7</Text>
-          <Text>Wishlists</Text>
+          <ThemedText style={{fontSize: 20, fontWeight: 'bold'}}>7</ThemedText>
+          <ThemedText>Wishlists</ThemedText>
         </View>
       </View>
 

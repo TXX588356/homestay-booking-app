@@ -1,21 +1,26 @@
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import { RootStackParamList } from '../../Types';
 import { allProperties } from '../../properties';
 import PropertyCard from '../../components/PropertyCard';
 import { StackScreenProps } from '@react-navigation/stack';
+import { ExternalStyles } from '../../Styles';
+import { ThemeContext } from '../../util/ThemeManager';
+import ThemedText from '../../components/ThemedText';
 
 type CategoryProps = StackScreenProps<RootStackParamList, 'CategoryScreen'>;
 
 
 
 const CategoryScreen = ({route, navigation}: CategoryProps) => {
+    const { theme } = useContext(ThemeContext);
+    
     const {catName} = route.params;
     const categoryData = allProperties[catName];
 
     return (
-        <ScrollView style={styles.container}>
-            <Text style={styles.header}>{catName}</Text>
+        <ScrollView style={[ExternalStyles.container, {padding: 10, backgroundColor: theme.background}]}>
+            <ThemedText style={ExternalStyles.titleText}>{catName}</ThemedText>
             {categoryData ? (
                 categoryData.map((item) => (
                     <PropertyCard
@@ -28,23 +33,11 @@ const CategoryScreen = ({route, navigation}: CategoryProps) => {
                     />
                 ))
             ) : (
-                <Text>No properties found for this category.</Text>
+                <ThemedText>No properties found for this category.</ThemedText>
             )}
         </ScrollView>
     )
 }
 
-
-
-const styles = StyleSheet.create({
-    container: {
-        padding: 10,
-        backgroundColor: '#fff',
-    },
-    header: {
-        fontSize: 24,
-        fontWeight: 'bold',
-    },
-});
 
 export default CategoryScreen;

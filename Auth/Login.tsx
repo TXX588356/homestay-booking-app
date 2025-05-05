@@ -163,7 +163,7 @@ const AuthScreen = ({ navigation }: Props) => {
 
                 <View style={styles.formContainer}>
                     {isNewUser && (
-                        <View style={styles.inputContainer}>
+                        <View style={ExternalStyles.inputContainer}>
                             <Text style={styles.label}>Full Name</Text>
                             <TextInput
                                 style={styles.input}
@@ -174,7 +174,7 @@ const AuthScreen = ({ navigation }: Props) => {
                         </View>
                     )}
 
-                    <View style={styles.inputContainer}>
+                    <View style={ExternalStyles.inputContainer}>
                         <Text style={styles.label}>Email</Text>
                         <TextInput
                             style={styles.input}
@@ -185,7 +185,7 @@ const AuthScreen = ({ navigation }: Props) => {
                         />
                     </View>
 
-                    <View style={styles.inputContainer}>
+                    <View style={ExternalStyles.inputContainer}>
                         <Text style={styles.label}>Password</Text>
                         <PasswordInput
                             placeholder={isNewUser ? "Create a password" : "Enter your password"}
@@ -195,7 +195,7 @@ const AuthScreen = ({ navigation }: Props) => {
                     </View>
 
                     {isNewUser && (
-                        <View style={styles.inputContainer}>
+                        <View style={ExternalStyles.inputContainer}>
                             <Text style={styles.label}>Confirm Password</Text>
                             <PasswordInput
                                 placeholder="Confirm your password"
@@ -206,7 +206,7 @@ const AuthScreen = ({ navigation }: Props) => {
                     )}
 
                     {isNewUser && (
-                        <View style={styles.inputContainer}>
+                        <View style={ExternalStyles.inputContainer}>
                             <Text style={styles.label}>Phone Number</Text>
                             <TextInput
                                 style={styles.input}
@@ -221,7 +221,7 @@ const AuthScreen = ({ navigation }: Props) => {
                     
                     <MyButton onPress={handleSubmit} title={isNewUser? 'Register' : 'Login'} textStyle={{ color: 'white', fontWeight: 'bold' }} disabled={isLoading}/>
 
-                    <View style={styles.signInContainer}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center',}}>
                         <Text style={{ fontWeight: 'bold', fontFamily: 'Montserrat-Bold' }}>
                             {isNewUser ? 'Already have an account?' : "Don’t have an account?"}
                         </Text>
@@ -257,9 +257,7 @@ const styles = StyleSheet.create({
         color: 'black',
         fontFamily: 'Montserrat-Bold',
     },
-    inputContainer: {
-        marginBottom: 10,
-    },
+    
     label: {
         fontSize: 16,
         fontWeight: '500',

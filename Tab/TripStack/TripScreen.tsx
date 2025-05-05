@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { View, Text, FlatList, ActivityIndicator, Alert, Image, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
@@ -7,8 +7,11 @@ import BackButton from '../../components/BackButton';
 import { ExternalStyles } from '../../Styles';
 import property from '../../allProperties.json';
 import config from "../../config";
+import ThemedText from '../../components/ThemedText';
+import { ThemeContext } from '../../util/ThemeManager';
 
 const TripScreen = ({ navigation }: any) => {
+  const { theme } = useContext(ThemeContext);
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -65,13 +68,13 @@ const TripScreen = ({ navigation }: any) => {
   if (loading) return <LoadingIndicator/>;
 
   return (
-    <View style={ExternalStyles.container}>
+    <View style={[ExternalStyles.container, {backgroundColor: theme.background}]}>
       <View style={ExternalStyles.backButtonContainer}>
         <BackButton/>
       </View>
-      <Text style={[ExternalStyles.headerText,{ marginBottom: 15, marginTop: 35, padding:10 }]}>My Trips</Text>
+      <ThemedText style={[ExternalStyles.headerText,{ marginBottom: 15, marginTop: 35, padding:10 }]}>My Trips</ThemedText>
 
-      {bookings.length === 0 ? <View><Text>No record found</Text></View>: null}
+      {bookings.length === 0 ? <View><ThemedText>No record found</ThemedText></View>: null}
 
       <FlatList
         data={bookings}
@@ -86,11 +89,11 @@ const TripScreen = ({ navigation }: any) => {
               onPress={() => navigation.navigate('TripDetails', { booking: item, property: property})}
             >
               <View>
-                <Text style={ExternalStyles.sectionTitle}>{property.name}</Text>
-                <Text style={{ color: '#555' }}>{property.location}</Text>
-                <Text style={{ color: '#555' }}>
+                <ThemedText style={ExternalStyles.sectionTitle}>{property.name}</ThemedText>
+                <ThemedText style={{ color: '#555' }}>{property.location}</ThemedText>
+                <ThemedText style={{ color: '#555' }}>
                   From: {item.startDate} → To: {item.endDate}
-                </Text>
+                </ThemedText>
               </View>
             </TouchableOpacity>
           );

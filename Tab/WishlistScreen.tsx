@@ -1,5 +1,5 @@
 import { View, Text, FlatList, TouchableOpacity} from 'react-native'
-import React, {useState, useCallback} from 'react'
+import React, {useState, useCallback, useContext} from 'react'
 import { ScrollView } from 'react-native-gesture-handler';
 import { useFocusEffect } from '@react-navigation/native';
 import { ExternalStyles } from '../Styles';
@@ -12,12 +12,15 @@ import PropertyCard from '../components/PropertyCard';
 import { RootStackParamList } from '../Types';
 import { StackScreenProps } from '@react-navigation/stack';
 import { imageMap } from '../imageMap';
+import { ThemeContext } from '../util/ThemeManager';
 
 export type Props = StackScreenProps<RootStackParamList, 'Wishlist'>;
 
 const Wishlist = ({route, navigation}: Props) => {
   const [wishlist, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const {theme} = useContext(ThemeContext);
 
   // Load current user and fetch wishlist
   const fetchWishlist = () => {
@@ -75,7 +78,7 @@ const Wishlist = ({route, navigation}: Props) => {
   if (loading) return <LoadingIndicator/>;
   
   return (
-    <View style={ExternalStyles.container}>
+    <View style={[ExternalStyles.container, {backgroundColor: theme.background}]}>
       <View style={ExternalStyles.backButtonContainer}>
         <BackButton/>
       </View>

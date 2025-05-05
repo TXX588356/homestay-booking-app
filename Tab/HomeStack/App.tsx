@@ -28,9 +28,6 @@ const App = ({route, navigation}) => {
   return (
     <Stack.Navigator 
     screenOptions={{headerShown: false,
-      cardStyle: {
-        backgroundColor: 'transparent'
-      }
     }}
   >
         <Stack.Screen name="HomeScreen" component={HomeScreen}/>

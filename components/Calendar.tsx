@@ -11,6 +11,7 @@ const Calendar = ({onDateChange}: {onDateChange: (startDate: DateType, endDate: 
     const [endDate, setEndDate] = useState<DateType>();    return (
         <DateTimePicker
         mode="range"
+        style={{backgroundColor: 'white'}}
         startDate={startDate}
         endDate={endDate}
         onChange={({ startDate, endDate }) => {

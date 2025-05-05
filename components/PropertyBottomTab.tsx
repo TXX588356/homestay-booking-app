@@ -1,11 +1,14 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import config from '../config';
+import { ThemeContext } from '../util/ThemeManager';
+import ThemedText from './ThemedText';
+import { ExternalStyles } from '../Styles';
 
 type Props = {
     propertyData: any,
@@ -15,6 +18,7 @@ type Props = {
 const PropertyBottomTab = ({propertyData, addToWishlist}: Props) => {
     const navigation = useNavigation();
     const [liked, setLiked] = useState(false);
+    const { theme } = useContext(ThemeContext);
 
     const fetchWishlistItemFromDB = () => {
         AsyncStorage.getItem('currentUser')
@@ -121,8 +125,8 @@ const PropertyBottomTab = ({propertyData, addToWishlist}: Props) => {
     };
 
     return (
-        <View style={styles.bottomContainer}>
-            <View style={styles.innerContainer}>
+        <View style={[ExternalStyles.bottomContainer, {backgroundColor: theme.background}]}>
+            <View style={ExternalStyles.innerContainer}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <Pressable onPress={handlePress}>
                         <Ionicons
@@ -131,12 +135,12 @@ const PropertyBottomTab = ({propertyData, addToWishlist}: Props) => {
                         size={24}
                         />
                     </Pressable>
-                    <Text style={[{marginLeft: 10}, styles.textStyle]}>RM{propertyData.price}</Text>
-                    <Text style={{marginLeft: 5, marginTop: 6, color: 'black'}}>per night</Text>
+                    <ThemedText style={[{marginLeft: 10, fontSize: 18, fontWeight: 'bold'}]}>RM{propertyData.price}</ThemedText>
+                    <ThemedText style={{marginLeft: 5, marginTop: 6}}>per night</ThemedText>
                 </View>
                 <View style={{ flexDirection: 'row', marginRight: 20, justifyContent: 'center', alignItems: 'center',}}>
-                    <TouchableOpacity style={styles.bookButton} onPress={handleReserve}>
-                        <Text style={styles.buttonText}>Reserve</Text>
+                    <TouchableOpacity style={ExternalStyles.bookButton} onPress={handleReserve}>
+                        <Text style={ExternalStyles.buttonText}>Reserve</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -145,46 +149,5 @@ const PropertyBottomTab = ({propertyData, addToWishlist}: Props) => {
 
   )
 }
-
-const styles = StyleSheet.create({
-    bottomContainer: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: 0,
-        height: 60,
-        backgroundColor: '#fff',
-        borderTopWidth: 1,
-        borderTopColor: '#ccc',
-        justifyContent: 'center',
-        paddingLeft: 20,
-    },
-    innerContainer: {
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    textStyle: {
-        color: 'black',
-        fontWeight: 'bold',
-        fontSize: 18
-    },
-    bookButton: {
-        height: 35,
-        backgroundColor: '#FF385C',
-        width: 100,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 8,
-
-    },
-    buttonText: {
-        fontWeight: 'bold',
-        justifyContent: 'center',
-        color: '#fff',
-        fontFamily: 'Montserrat-Regular',
-
-    },
-})
 
 export default PropertyBottomTab;

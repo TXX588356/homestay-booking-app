@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useContext, useMemo, useRef } from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import { Text, Button } from 'react-native-paper';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -9,11 +9,15 @@ import BackButton from '../../components/BackButton';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import LoadingIndicator, { useTransitionLoading } from '../../components/LoadingIndicator';
 import BookingSummary from '../../components/BookingSummary';
+import ThemedText from '../../components/ThemedText';
+import { ThemeContext } from '../../util/ThemeManager';
 
 
 type Props = StackScreenProps<RootStackParamList, 'ReviewBookingScreen'>;
 
 const ReviewBookingScreen = ({route, navigation}: Props) => {
+  const { theme } = useContext(ThemeContext);
+  
 
   const {property, startDate, endDate, numGuests} = route.params;
   let numOfDays;
@@ -41,13 +45,13 @@ const ReviewBookingScreen = ({route, navigation}: Props) => {
   }
 
   return (
-    <ScrollView style={ExternalStyles.container}>
-    <View style={ExternalStyles.backButtonContainer}>
+    <ScrollView style={[ExternalStyles.container, {backgroundColor: theme.background}]}>
+    <View style={[ExternalStyles.backButtonContainer, {backgroundColor: theme.background}]}>
       <BackButton/>
     </View>
 
-    <View style={[ExternalStyles.ContainerWithUnderline, {paddingTop: 25}]}>
-        <Text style={ExternalStyles.titleText}>Review and Continue</Text>
+    <View style={[ExternalStyles.ContainerWithUnderline, {paddingTop: 25, backgroundColor: theme.background}]}>
+        <ThemedText style={ExternalStyles.titleText}>Review and Continue</ThemedText>
       </View>
 
       <BookingSummary

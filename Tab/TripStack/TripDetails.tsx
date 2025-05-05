@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { View, Text } from 'react-native'
 import { ExternalStyles } from '../../Styles';
 import BackButton from '../../components/BackButton';
+import { ThemeContext } from '../../util/ThemeManager';
+import ThemedText from '../../components/ThemedText';
 
 const TripDetails = ({route, navigation}: any) => {
+  const { theme } = useContext(ThemeContext);
 
   const {booking, property} = route.params;
   const serviceFees = booking.numDays * property.price * 0.10;
@@ -11,7 +14,7 @@ const TripDetails = ({route, navigation}: any) => {
   const paymentMethod = booking.paymentMethod === 'card' ? "Credit Card" : "FPX Online Banking";
 
   return (
-    <View>
+    <View style={{backgroundColor: theme.background, flex: 1}}>
       <View style={ExternalStyles.backButtonContainer}>
         <BackButton/>
       </View>
@@ -40,8 +43,8 @@ const TripDetails = ({route, navigation}: any) => {
       
       </View>
       <View style={{margin: 10, paddingLeft: 10}}>
-          <Text style={ExternalStyles.sectionTitle}>Payment Method</Text>
-          <Text>{paymentMethod}</Text>
+          <ThemedText style={ExternalStyles.sectionTitle}>Payment Method</ThemedText>
+          <ThemedText>{paymentMethod}</ThemedText>
       </View>
     </View>
   );

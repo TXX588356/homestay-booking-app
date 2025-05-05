@@ -1,26 +1,30 @@
 import { View, Text, Switch, StyleSheet } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Appearance, ColorSchemeName } from 'react-native'
-import Switches from '../components/Switches'
 import { ExternalStyles } from '../Styles'
-
+import MySwitch from '../components/MySwitch'
+import { ThemeContext } from '../util/ThemeManager'
 
 
 
 const SettingScreen = () => {
+  const { theme } = useContext(ThemeContext);
   return (
-        <View style={ExternalStyles.container}>
-      <View>
-        
-      </View>
-    </View>
+    <View style={[ExternalStyles.container, {backgroundColor: theme.background}]}>
+      <MySwitch/>
+</View>
   )
 }
 
+/*
+Section 1: Theme and Appearance
+Section 2: About us
+Section 3: Policy
+Section 4: Delete Account?
+*/
 
-const styles = StyleSheet.create({
-  
-})
+
+
 
 export default SettingScreen;
 
