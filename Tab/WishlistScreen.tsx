@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingIndicator from '../components/LoadingIndicator';
 import BackButton from '../components/BackButton';
 import property from '../allProperties.json';
+import config from "../config";
 
 const Wishlist = () => {
   const [wishlist, setWishlist] = useState([]);
@@ -19,7 +20,7 @@ const Wishlist = () => {
         if (userString) {
           const user = JSON.parse(userString);
           
-          fetch(`http://10.0.2.2:5000/api/wishlist/user/${user.id}`)
+          fetch(`${config.settings.serverPath}/api/wishlist/user/${user.id}`)
             .then((response) => {
               if (!response.ok) {
                 throw new Error('Failed to fetch wishlist');
