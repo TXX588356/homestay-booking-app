@@ -12,7 +12,7 @@ import LoadingIndicator, { useTransitionLoading } from '../../components/Loading
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import BottomSheet from '@gorhom/bottom-sheet';
-
+import config from "../../config";
 
 
 type Props = StackScreenProps<RootStackParamList, 'PaymentMethod'>;
@@ -120,7 +120,7 @@ const PaymentMethodScreen = ({route, navigation}: Props) => {
             paymentMethod: selectedMethod
           };
 
-          fetch('http://10.0.2.2:5000/api/bookingHistory', {  // Replace with your LAN IP!
+          fetch(`${config.settings.serverPath}/api/bookingHistory`, {  // Replace with your LAN IP!
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(bookingData),
