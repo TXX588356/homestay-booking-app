@@ -8,8 +8,14 @@ import LoadingIndicator from '../components/LoadingIndicator';
 import BackButton from '../components/BackButton';
 import property from '../allProperties.json';
 import config from "../config";
+import PropertyCard from '../components/PropertyCard';
+import { RootStackParamList } from '../Types';
+import { StackScreenProps } from '@react-navigation/stack';
+import { imageMap } from '../imageMap';
 
-const Wishlist = () => {
+export type Props = StackScreenProps<RootStackParamList, 'Wishlist'>;
+
+const Wishlist = ({route, navigation}: Props) => {
   const [wishlist, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -58,7 +64,10 @@ const Wishlist = () => {
   const getPropertyDetails = (propertyId) => {
     for (let category in property) {
       const place = property[category].find(p => p.id === propertyId);
-      if (place) return place;
+      if (place){
+        const images = place.images.map(img => imageMap[img]);
+        return {...place, images};
+      }
     }
     return null;
   };
@@ -71,8 +80,7 @@ const Wishlist = () => {
         <BackButton/>
       </View>
 
-      <Text>Wishlist Screen</Text>
-
+      
       {wishlist.length === 0 ? <View><Text>No wishlist added</Text></View>: null}
     
           <FlatList
@@ -84,20 +92,14 @@ const Wishlist = () => {
               const property = getPropertyDetails(item.propertyID);
               
               return (
-                <TouchableOpacity
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginBottom: 15,
-                    backgroundColor: '#f0f0f0',
-                    padding: 10,
-                    borderRadius: 10,
-                  }}
-                >
-                  <View>
-                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{property.name}</Text>
-                  </View>
-                </TouchableOpacity>
+                <PropertyCard
+                  key={property.id}
+                  name={property.name}
+                  location={property.location}
+                  price={property.price}
+                  images={property.images[0]}
+                  onPress={() => navigation.navigate('PropertyDetails', {propertyId: property.id, data: property})}
+                />
               );
             }}
           />
