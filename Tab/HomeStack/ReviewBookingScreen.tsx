@@ -8,6 +8,7 @@ import MyButton from '../../components/MyButton';
 import BackButton from '../../components/BackButton';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import LoadingIndicator, { useTransitionLoading } from '../../components/LoadingIndicator';
+import BookingSummary from '../../components/BookingSummary';
 
 
 type Props = StackScreenProps<RootStackParamList, 'ReviewBookingScreen'>;
@@ -49,29 +50,14 @@ const ReviewBookingScreen = ({route, navigation}: Props) => {
         <Text style={ExternalStyles.titleText}>Review and Continue</Text>
       </View>
 
-      <View style={[ExternalStyles.ContainerWithUnderline, {backgroundColor: 'lightgrey', padding: 10,}]}>
-        <Text style={ExternalStyles.sectionTitle}>Booking Details</Text>
-        <Text style={{marginVertical: 5}}>{property.name}</Text>
-        <Text style={{marginVertical: 5}}>
-        {formatDate(startDateObj)} ~ {formatDate(endDateObj)} ({numOfDays} nights)
-        </Text>
-        <Text style={{marginVertical: 5}}>Guests: {numGuests} {'\n\n'}</Text>
-
-        <Text style={ExternalStyles.sectionTitle}>Price Breakdown</Text>
-        <View style={ExternalStyles.priceRow}>
-          <Text>RM{property.price} x {numOfDays} nights</Text>
-          <Text>RM{(property.price * numOfDays).toFixed(2)}</Text>
-        </View>
-        <View style={ExternalStyles.priceRow}>
-          <Text>Service Fee (10%)</Text>
-          <Text>RM{(serviceFees).toFixed(2)}</Text>
-        </View>
-        <View style={ExternalStyles.totalRow}>
-          <Text style={ExternalStyles.sectionTitle}>Total</Text>
-          <Text style={ExternalStyles.sectionTitle}>RM{totalPrice.toFixed(2)}</Text>
-        </View>
-
-      </View>
+      <BookingSummary
+        propertyName={property.name}
+        pricePerNight={property.price}
+        startDate={startDateObj}
+        endDate={endDateObj}
+        numGuests={numGuests}
+        numOfDays={numOfDays}
+      />
 
         
       <View style={ExternalStyles.sectionContainer}>

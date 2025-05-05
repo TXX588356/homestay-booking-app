@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../Types';
 import { ExternalStyles } from '../../Styles';
-import Carousel from '../../components/Carousel';
+import CustomCarousel from '../../components/CustomCarousel';
 import { ScrollView } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import PropertyBottomTab from '../../components/PropertyBottomTab';

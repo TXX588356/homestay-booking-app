@@ -27,7 +27,7 @@ export function useTransitionLoading(navigation: NavigationProp<any>) {
   return loading;
 }
 
-const LoadingIndicator: React.FC = () => (
+const LoadingIndicator = () => (
   <View style={{ flex:1, justifyContent:'center', alignItems:'center' }}>
     <BallIndicator size={40} color="#ff5a5f" />
   </View>

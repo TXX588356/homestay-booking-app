@@ -65,11 +65,11 @@ const TripScreen = ({ navigation }: any) => {
   if (loading) return <LoadingIndicator/>;
 
   return (
-    <View style={{ flex: 1, padding: 20 }}>
+    <View style={ExternalStyles.container}>
       <View style={ExternalStyles.backButtonContainer}>
         <BackButton/>
       </View>
-      <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 15, marginTop: 35 }}>My Trips</Text>
+      <Text style={[ExternalStyles.headerText,{ marginBottom: 15, marginTop: 35, padding:10 }]}>My Trips</Text>
 
       {bookings.length === 0 ? <View><Text>No record found</Text></View>: null}
 
@@ -82,18 +82,11 @@ const TripScreen = ({ navigation }: any) => {
           
           return (
             <TouchableOpacity
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginBottom: 15,
-                backgroundColor: '#f0f0f0',
-                padding: 10,
-                borderRadius: 10,
-              }}
+              style={ExternalStyles.ContainerWithUnderline}
               onPress={() => navigation.navigate('TripDetails', { booking: item, property: property})}
             >
               <View>
-                <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{property.name}</Text>
+                <Text style={ExternalStyles.sectionTitle}>{property.name}</Text>
                 <Text style={{ color: '#555' }}>{property.location}</Text>
                 <Text style={{ color: '#555' }}>
                   From: {item.startDate} → To: {item.endDate}
@@ -109,18 +102,4 @@ const TripScreen = ({ navigation }: any) => {
 
 export default TripScreen;
 
-/*
-import { View, Text, Button } from 'react-native'
-import React from 'react'
-import { ScrollView } from 'react-native-gesture-handler'
-import { ExternalStyles } from '../../Styles'
 
-const TripScreen = ({route, navigation}: any) => {
-  return (
-    <ScrollView style={ExternalStyles.container}>
-      <Text>TripScreen</Text>
-    </ScrollView>
-  )
-}
-
-export default TripScreen;*/

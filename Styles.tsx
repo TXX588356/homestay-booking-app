@@ -1,4 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
+
+const width = Dimensions.get('window').width;
 
 export const ExternalStyles = StyleSheet.create({
     container: {
@@ -65,6 +67,17 @@ export const ExternalStyles = StyleSheet.create({
         marginBottom: 20,
         borderRadius: 8,
     },
+    imageContainer: {
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 5,
+      },
+      dotContainer: {
+          flexDirection: 'row',
+          justifyContent: 'center',
+          marginTop: 10,
+      },
 
     propertyName: {
         color: 'black',
@@ -85,6 +98,12 @@ export const ExternalStyles = StyleSheet.create({
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
     },
+    CarouselImage: {
+        width: '100%',
+        height: width - 10,
+        resizeMode: 'cover',
+        borderRadius: 5,
+    },
     propertyCardContainer: {
         width: "95%",
         height: 200,
@@ -99,15 +118,29 @@ export const ExternalStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginVertical: 5
-      },
-      totalRow: {
+    },
+    totalRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: 15,
         borderTopWidth: 1,
         borderTopColor: '#ddd',
         paddingTop: 10
-      },
+    },
+
+    dot: {
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        marginHorizontal: 5,
+    },
+    activeDot: {
+        backgroundColor: 'grey',
+    },
+    inactiveDot: {
+        backgroundColor: '#ccc',
+    },
+    
 
    
 

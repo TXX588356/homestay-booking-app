@@ -30,6 +30,7 @@ export type RootStackParamList = {
   PropertyDetails: {data: any};
   WelcomeScreen: {display: string},
   BookingScreen: {property: any},
+  Wishlist: {property: any},
   
 
 };

@@ -11,7 +11,7 @@ interface GuestType {
   description: string;
 }
 
-interface GuestSelectorProps {
+type GuestSelectorProps = {
   onGuestsChange?: (guests: { adults: number; children: number; infants: number }) => void;
 }
 
@@ -57,7 +57,7 @@ const GuestSelector= ({ onGuestsChange }: GuestSelectorProps) => {
             <Text style={ExternalStyles.label}>{guestType.label}</Text>
               <Text style={{fontSize: 12}}>{guestType.description}</Text>
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center',}}>
+          <View style={{ flexDirection: 'row',alignItems: 'center',}}>
           <CounterButton
               label="-"
               onPress={()=> handleCountChange(index,false)}

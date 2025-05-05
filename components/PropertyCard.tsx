@@ -12,7 +12,6 @@ type PropertyProps = {
     onPress: () => void;
 }
 
-
 const PropertyCard = ({name, location, price, images, onPress}: PropertyProps) => {
   return (
     <TouchableOpacity style={ExternalStyles.propertyCardContainer} onPress={onPress}>

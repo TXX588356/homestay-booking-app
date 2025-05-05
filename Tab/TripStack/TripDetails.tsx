@@ -39,7 +39,7 @@ const TripDetails = ({route, navigation}: any) => {
         </View>
       
       </View>
-      <View>
+      <View style={{margin: 10, paddingLeft: 10}}>
           <Text style={ExternalStyles.sectionTitle}>Payment Method</Text>
           <Text>{paymentMethod}</Text>
       </View>

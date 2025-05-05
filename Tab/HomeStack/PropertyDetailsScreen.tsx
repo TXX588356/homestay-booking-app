@@ -4,7 +4,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../Types';
 import { ExternalStyles } from '../../Styles';
 export type Props = StackScreenProps<RootStackParamList, 'PropertyDetails'>;
-import Carousel from '../../components/Carousel';
+import CustomCarousel from '../../components/CustomCarousel';
 import { ScrollView } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import PropertyBottomTab from '../../components/PropertyBottomTab';
@@ -31,9 +31,9 @@ const PropertyDetailsScreen = ({route, navigation}: Props) => {
             <View style={ExternalStyles.backButtonContainer}>
                 <BackButton/>
             </View>
-                <Carousel data={data.images}/>
+                <CustomCarousel data={data.images}/>
 
-                <View style={ExternalStyles.propertyTitle}>
+                <View style={[ExternalStyles.propertyTitle, {paddingTop: 70}]}>
                     <Text style={ExternalStyles.titleText}>{data.name}</Text>
                     <Text style={ExternalStyles.subTitle}>{data.category} stay in {data.location}</Text>
                 </View>
