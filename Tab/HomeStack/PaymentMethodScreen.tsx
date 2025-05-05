@@ -87,14 +87,15 @@ const PaymentMethodScreen = ({route, navigation}: Props) => {
 
 
     const handlePayment = () => {
-      saveBookingDetailsToDB();
       if (selectedMethod === 'card') {
         if (validateCardForm()) {
-          Alert.alert("Payment Successful", "Redirecting to home screen...", [{text: "OK", onPress: () => navigation.navigate('HomeScreen')}])
-          setTimeout(() => {navigation.navigate("HomeScreen")}, 3000);
+            saveBookingDetailsToDB();
+            Alert.alert("Payment Successful", "Redirecting to home screen...", [{text: "OK", onPress: () => navigation.navigate('HomeScreen')}])
+            setTimeout(() => {navigation.navigate("HomeScreen")}, 3000);
         }
       } else if (selectedMethod === 'fpx') {
         if (validateFPXForm()) {
+            saveBookingDetailsToDB();
             Alert.alert("Payment Successful", "Redirecting to home screen...", [{text: "OK", onPress: () => navigation.navigate('HomeScreen')}])
             setTimeout(() => {navigation.navigate("HomeScreen")}, 3000);
         }
