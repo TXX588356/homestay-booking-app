@@ -196,8 +196,8 @@ const PaymentMethodScreen = ({route, navigation}: Props) => {
                           color='black'
                       />
                       <RadioButton.Item
-                          label="RHB Bank"
-                          value="rhb"
+                          label="Hong Leong Bank"
+                          value="hongleong"
                           position="trailing"
                           labelStyle={{ fontSize: 16 }}
                           color='black'
