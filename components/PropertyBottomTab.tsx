@@ -5,6 +5,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import config from '../config';
 
 type Props = {
     propertyData: any,
@@ -23,7 +24,7 @@ const PropertyBottomTab = ({propertyData, addToWishlist}: Props) => {
               const userID = parseInt(user.id);
               const propertyID = String(propertyData.id);
 
-              fetch(`http://10.0.2.2:5000/api/wishlist/user/${userID}/property/${propertyID}`)
+              fetch(`${config.settings.serverPath}/api/wishlist/user/${userID}/property/${propertyID}`)
                 .then((response) => {
                   return response.json();
                 })
@@ -75,7 +76,7 @@ const PropertyBottomTab = ({propertyData, addToWishlist}: Props) => {
             const user = JSON.parse(userString);
             const userID = user.id;
   
-            fetch('http://10.0.2.2:5000/api/wishlist', {  // Replace with your LAN IP!
+            fetch(`${config.settings.serverPath}/api/wishlist`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({userID: userID, propertyID: propertyData.id}),
@@ -101,7 +102,7 @@ const PropertyBottomTab = ({propertyData, addToWishlist}: Props) => {
             const user = JSON.parse(userString);
             const userID = user.id;
   
-            fetch('http://10.0.2.2:5000/api/wishlist', {  // Replace with your LAN IP!
+            fetch(`${config.settings.serverPath}/api/wishlist`, { 
               method: 'DELETE',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({userID: userID, propertyID: propertyData.id}),
