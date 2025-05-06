@@ -220,5 +220,12 @@ export const ExternalStyles = StyleSheet.create({
         fontFamily: 'Montserrat-Regular',
 
     },
+    output: {
+        height: 400,
+        fontSize: 16,
+        marginTop: 10,
+        marginBottom: 10,
+        textAlignVertical: 'top',
+      },
 
 });

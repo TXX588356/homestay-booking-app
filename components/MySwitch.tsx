@@ -2,31 +2,23 @@ import { View, Text, StyleSheet, Appearance, ColorSchemeName, Switch } from 'rea
 import React, { useContext, useEffect, useState } from 'react'
 import { ThemeContext } from '../util/ThemeManager'
 import ThemedText from './ThemedText';
-
-
-
-/* useEffect(() => {
-  const appearanceChange = Appearance.addChangeListener(
-    ({colorScheme}) => {
-      setTheme(colorScheme);
-    },
-  );
-  return () => appearanceChange.remove();
-}, []);
- */
+import { ExternalStyles } from '../Styles';
 
 const MySwitch = () => {
   const {themeName, toggleTheme} = useContext(ThemeContext);
 
 
   return (
-    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-      <ThemedText style={{marginRight: 10}}>{themeName === 'light' ? 'Light Mode' : 'Dark Mode'}</ThemedText>
-      <Switch
-      
-      value={themeName === 'dark'}
-      onValueChange={toggleTheme}/>
+    <View style={[ExternalStyles.container, {padding: 10, backgroundColor: themeName.background}]}>
+      <View style={[{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}, ExternalStyles.ContainerWithUnderline]}>
+            <ThemedText style={[ExternalStyles.headerText]}>{themeName === 'light' ? 'Light Mode' : 'Dark Mode'}</ThemedText>
+            <Switch
+            
+            value={themeName === 'dark'}
+            onValueChange={toggleTheme}/>
+      </View>
     </View>
+    
   )
 }
 

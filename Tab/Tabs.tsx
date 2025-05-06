@@ -10,7 +10,7 @@ import ProfileScreen from '../Drawer/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
 
-const TabNavigator = ({ navigation, route }) => {
+const TabNavigator = ({ navigation, route }: any) => {
 
   
   

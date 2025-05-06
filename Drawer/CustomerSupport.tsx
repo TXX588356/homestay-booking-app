@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   StyleSheet,
   Text,
@@ -13,12 +13,15 @@ import MySwitch from '../components/MySwitch'
 import { ThemeContext } from '../util/ThemeManager'
 import io from 'socket.io-client';
 import config from '../config';
+import ThemedText from '../components/ThemedText';
 
 var socket = io(`${config.settings.serverPath}/chat`, {
     transports: ['websocket'],
 });
 
 const CustomerSupport = () => {
+    const { theme } = useContext(ThemeContext);
+  
   const [name, setName] = useState('User');  // fixed name for user
   const [message, setMessage] = useState('');
   const [chatroom, setChatroom] = useState('');
@@ -44,16 +47,16 @@ const CustomerSupport = () => {
   }, []);
 
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.title}>Chat with us</Text>
+    <ScrollView style={[ExternalStyles.container, {backgroundColor: theme.background}]}>
+      <ThemedText style={{fontSize: 22, fontWeight: 'bold', textAlign: 'center', marginVertical: 10,}}>Chat with us</ThemedText>
       <TextInput
-        style={styles.output}
+        style={[ExternalStyles.output, {color: theme.text}]}
         value={chatroom}
         multiline
         editable={false}
       />
       <TextInput
-        style={[styles.input, {borderWidth: 1, borderColor: 'black' }]}
+        style={{fontSize: 16, color: theme.text, marginTop: 10, marginBottom: 10,borderWidth: 1, borderColor: theme.text }}
         placeholder="Enter message"
         value={message}
         selectTextOnFocus
@@ -79,40 +82,3 @@ const CustomerSupport = () => {
 
 export default CustomerSupport;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginVertical: 10,
-  },
-  input: {
-    fontSize: 16,
-    color: '#000099',
-    marginTop: 10,
-    marginBottom: 10,
-  },
-  output: {
-    height: 400,
-    fontSize: 16,
-    marginTop: 10,
-    marginBottom: 10,
-    textAlignVertical: 'top',
-    color: 'black',
-  },
-  button: {
-    padding: 20,
-    backgroundColor: 'blue',
-    marginTop: 10,
-    marginBottom: 10,
-  },
-  buttonText: {
-    color: 'white',
-    textAlign: 'center',
-  }
-});
