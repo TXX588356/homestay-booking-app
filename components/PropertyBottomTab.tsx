@@ -67,8 +67,10 @@ const PropertyBottomTab = ({propertyData, addToWishlist}: Props) => {
         if(!liked) {
             addToWishlist(propertyData);
             saveWishlistToDB();
+            ToastAndroid.show('Added to Wishlist', ToastAndroid.LONG);
         } else {
             removeWishlistFromDB();
+            ToastAndroid.show('Removed from Wishlist', ToastAndroid.LONG);
         }
     };
       
