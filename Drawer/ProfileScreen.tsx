@@ -10,10 +10,8 @@ import { User } from '../services/db-service'
 import { useIsFocused } from '@react-navigation/native'
 import { ThemeContext } from '../util/ThemeManager';
 import ThemedText from '../components/ThemedText';
+import config from '../config';
 
-
-
- 
 const Profile = () => {
   const { theme } = useContext(ThemeContext);
   
