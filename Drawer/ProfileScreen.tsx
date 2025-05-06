@@ -20,6 +20,8 @@ const Profile = () => {
   const navigation = useNavigation();
   const [userData, setUserData] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [numTrips, setNumTrips] = useState(0);
+  const [numWishlist, setNumWishlist] = useState(0);
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -44,6 +46,54 @@ const Profile = () => {
     }
   }, [isFocused])
 
+  // Start fetching only after the userData is set
+  useEffect(() => {
+    if (userData) {
+      fetchNumWishlist();
+      fetchNumTrips();
+    }
+  }, [userData]);
+
+ const fetchNumWishlist = () => {
+    setLoading(true);
+    fetch(`${config.settings.serverPath}/api/wishlist/user/${userData.id}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch num of wishlist');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setNumWishlist(data.length);
+      })
+      .catch((error) => {
+        console.error('Error fetching num of wishlist:', error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const fetchNumTrips = () => {
+    setLoading(true);
+    fetch(`${config.settings.serverPath}/api/bookingHistory/user/${userData.id}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch num of trips');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setNumTrips(data.length);
+      })
+      .catch((error) => {
+        console.error('Error fetching num of trips:', error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+ 
   const handleLogout = async () => {
     try {
       await AsyncStorage.removeItem('currentUser');
@@ -116,11 +166,11 @@ const Profile = () => {
           borderRightColor: '#dddddd', 
           borderRightWidth: 1
           }]}>
-          <ThemedText style={{fontSize: 20, fontWeight: 'bold'}}>10</ThemedText>
+          <ThemedText style={{fontSize: 20, fontWeight: 'bold'}}>{numTrips}</ThemedText>
           <ThemedText>Trips</ThemedText>
         </View>
         <View style={styles.infoBox}>
-          <ThemedText style={{fontSize: 20, fontWeight: 'bold'}}>7</ThemedText>
+          <ThemedText style={{fontSize: 20, fontWeight: 'bold'}}>{numWishlist}</ThemedText>
           <ThemedText>Wishlists</ThemedText>
         </View>
       </View>
