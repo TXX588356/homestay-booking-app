@@ -7,8 +7,11 @@ import SettingScreen from './SettingScreen';
 import CustomerSupport from './CustomerSupport';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ThemeContext } from '../util/ThemeManager';
+import SettingsStackNavigator from './SettingsStackNavigator';
 
 const Drawer = createDrawerNavigator ();
+
+
 
 const DrawerNavigator = () => {
   const { theme } = useContext(ThemeContext);
@@ -33,7 +36,7 @@ const DrawerNavigator = () => {
           }}
         />
         <Drawer.Screen name="Profile" component={ProfileScreen} options={{drawerIcon: ({color}) => <Ionicons name="person-circle" size={22} color={color}/>,}}/>
-        <Drawer.Screen name="Settings" component={SettingScreen} options={{drawerIcon: ({color}) => <Ionicons name="cog" size={22} color={color}/>,}}/>
+        <Drawer.Screen name="Settings" component={SettingsStackNavigator} options={{drawerIcon: ({color}) => <Ionicons name="cog" size={22} color={color}/>,}}/>
         <Drawer.Screen name="Customer Support" component={CustomerSupport} options={{drawerIcon: ({color}) => <Ionicons name="help-circle" size={22} color={color}/>,}}/>
     </Drawer.Navigator>
   )

@@ -31,6 +31,7 @@ export type RootStackParamList = {
   WelcomeScreen: {display: string},
   BookingScreen: {property: any},
   Wishlist: {property: any},
+  AccountSettingScreen: {info: any},
   
 
 };

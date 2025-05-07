@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import {
-  StyleSheet,
   Text,
   TextInput,
   ToastAndroid,
@@ -9,7 +8,6 @@ import {
   View,
 } from 'react-native';
 import { ExternalStyles } from '../Styles'
-import MySwitch from '../components/MySwitch'
 import { ThemeContext } from '../util/ThemeManager'
 import io from 'socket.io-client';
 import config from '../config';
@@ -56,7 +54,7 @@ const CustomerSupport = () => {
         editable={false}
       />
       <TextInput
-        style={{fontSize: 16, color: theme.text, marginTop: 10, marginBottom: 10,borderWidth: 1, borderColor: theme.text }}
+        style={{fontSize: 16, color: theme.text, margin: 10, borderWidth: 2, borderColor: theme.text, borderRadius: 15 }}
         placeholder="Enter message"
         value={message}
         selectTextOnFocus

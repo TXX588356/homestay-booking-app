@@ -9,11 +9,10 @@ const MySwitch = () => {
 
 
   return (
-    <View style={[ExternalStyles.container, {padding: 10, backgroundColor: themeName.background}]}>
-      <View style={[{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}, ExternalStyles.ContainerWithUnderline]}>
-            <ThemedText style={[ExternalStyles.headerText]}>{themeName === 'light' ? 'Light Mode' : 'Dark Mode'}</ThemedText>
+    <View style={[{marginTop: 10, marginBottom: 20, backgroundColor: themeName.background}]}>
+      <View style={[{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: 1, borderBottomColor: 'lightgrey', paddingVertical: 10}]}>
+            <ThemedText style={[ExternalStyles.headerText, {paddingLeft: 20}]}>{themeName === 'light' ? 'Light Mode' : 'Dark Mode'}</ThemedText>
             <Switch
-            
             value={themeName === 'dark'}
             onValueChange={toggleTheme}/>
       </View>
@@ -21,6 +20,7 @@ const MySwitch = () => {
     
   )
 }
+
 
 export default MySwitch;
 
