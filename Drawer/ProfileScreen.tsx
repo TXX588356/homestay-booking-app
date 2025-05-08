@@ -54,7 +54,7 @@ const Profile = () => {
 
  const fetchNumWishlist = () => {
     setLoading(true);
-    fetch(`${config.settings.serverPath}/api/wishlist/user/${userData.id}`)
+    fetch(`${config.settings.wishlistServerPath}/api/wishlist/user/${userData.id}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Failed to fetch num of wishlist');
@@ -74,7 +74,7 @@ const Profile = () => {
 
   const fetchNumTrips = () => {
     setLoading(true);
-    fetch(`${config.settings.serverPath}/api/bookingHistory/user/${userData.id}`)
+    fetch(`${config.settings.bookingServerPath}/api/bookingHistory/user/${userData.id}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Failed to fetch num of trips');
@@ -113,7 +113,6 @@ const Profile = () => {
     )
   }
 
-  
   return (
     <View style={[ExternalStyles.container, {backgroundColor: theme.background}]}>
       <View style={styles.userInfo}>
