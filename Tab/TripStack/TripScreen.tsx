@@ -22,7 +22,7 @@ const TripScreen = ({ navigation }: any) => {
         if (userString) {
           const user = JSON.parse(userString);
           
-          fetch(`${config.settings.serverPath}/api/bookingHistory/user/${user.id}`)
+          fetch(`${config.settings.bookingServerPath}/api/bookingHistory/user/${user.id}`)
             .then((response) => {
               if (!response.ok) {
                 throw new Error('Failed to fetch bookings');
