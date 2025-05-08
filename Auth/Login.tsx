@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView, Alert } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, SafeAreaView, ScrollView, Alert } from "react-native";
 import PasswordInput from "../components/PasswordInput";
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from "../Types";
@@ -29,7 +29,7 @@ const AuthScreen = ({ navigation }: Props) => {
           try {
             const db = await getDBConnection();
             const users = await getUsers(db);
-            console.log('All Users:', users); // You can see them in your console
+            console.log('All Users:', users);
           } catch (error) {
             console.error('Failed to fetch users:', error);
           }

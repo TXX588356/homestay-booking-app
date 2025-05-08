@@ -1,9 +1,8 @@
-import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import { ExternalStyles } from '../Styles'
 import {Avatar, Title, Caption, TouchableRipple } from 'react-native-paper'; 
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { User } from '../db-service';
@@ -115,21 +114,21 @@ const Profile = () => {
 
   return (
     <View style={[ExternalStyles.container, {backgroundColor: theme.background}]}>
-      <View style={styles.userInfo}>
+      <View style={{marginBottom: 25, paddingHorizontal: 30,}}>
         <View style={{flexDirection: 'row', marginTop: 20}}>
           <Avatar.Image
             source={require('../img/cat.png')}
             size={80}
           />
           <View style={{marginLeft: 25}}>
-            <Title style={[styles.title, {marginTop: 10, color: theme.text}]}>{userData.name}</Title>
-            <Caption style={styles.caption, {color: theme.text}}>{userData.email}</Caption>
+            <Title style={[{fontSize: 16, fontWeight: 'bold',marginTop: 10, color: theme.text}]}>{userData.name}</Title>
+            <Caption style={{color: theme.text}}>{userData.email}</Caption>
           </View>
         </View>
       </View>
 
-      <View style={styles.userInfo}>
-        <View style={styles.row}>
+      <View style={{ marginBottom: 25, paddingHorizontal: 30,}}>
+        <View style={ExternalStyles.row}>
           <Ionicons 
           name='map'
           size={24}
@@ -138,7 +137,7 @@ const Profile = () => {
           />
           <ThemedText>Malaysia</ThemedText>
         </View>
-        <View style={styles.row}>
+        <View style={ExternalStyles.row}>
           <Ionicons 
           name='mail'
           size={24}
@@ -147,7 +146,7 @@ const Profile = () => {
           />
           <ThemedText>{userData.email}</ThemedText>
         </View>
-        <View style={styles.row}>
+        <View style={ExternalStyles.row}>
           <Ionicons 
           name='call'
           size={24}
@@ -158,15 +157,15 @@ const Profile = () => {
         </View>
       </View>
 
-      <View style={styles.infoBoxWrapper}>
-        <View style={[styles.infoBox, {
+      <View style={ExternalStyles.infoBoxWrapper}>
+        <View style={[ExternalStyles.infoBox, {
           borderRightColor: '#dddddd', 
           borderRightWidth: 1
           }]}>
           <ThemedText style={{fontSize: 20, fontWeight: 'bold'}}>{numTrips}</ThemedText>
           <ThemedText>Trips</ThemedText>
         </View>
-        <View style={styles.infoBox}>
+        <View style={ExternalStyles.infoBox}>
           <ThemedText style={{fontSize: 20, fontWeight: 'bold'}}>{numWishlist}</ThemedText>
           <ThemedText>Wishlists</ThemedText>
         </View>
@@ -184,56 +183,4 @@ const Profile = () => {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  profileSection: {
-    backgroundColor: 'grey',
-    height: 100,
-    width: '100%',
-  },
-  userInfo: {
-    marginBottom: 25,
-    paddingHorizontal: 30,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  caption: {
-
-  },
-  row: {
-    flexDirection: 'row',
-    marginBottom: 15,
-    paddingTop: 10,
-    paddingBottom: 10,
-  },
-  infoBoxWrapper: {
-    borderTopColor: '#dddddd',
-    borderBottomColor: '#dddddd',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    flexDirection: 'row',
-    height: 100,
-
-
-  },
-  infoBox: {
-    width: '50%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  menuWrapper: {
-
-  },
-  menuItem: {
-
-  },
-  menuItemText: {
-
-  },
-
-
-})
-
 export default Profile;

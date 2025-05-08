@@ -70,6 +70,27 @@ export const ExternalStyles = StyleSheet.create({
         fontFamily: 'Montserrat-Regular'
     },
 
+    row: {
+        flexDirection: 'row',
+        marginBottom: 15,
+        paddingTop: 10,
+        paddingBottom: 10,
+    },
+    infoBox: {
+        width: '50%',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+
+      infoBoxWrapper: {
+        borderTopColor: '#dddddd',
+        borderBottomColor: '#dddddd',
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+        flexDirection: 'row',
+        height: 100,
+      },
+
    /*  searchArea: {
         marginTop: 20,
         flexDirection: 'row',

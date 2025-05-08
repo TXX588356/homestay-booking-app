@@ -1,7 +1,6 @@
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import React, { useContext } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ExternalStyles } from '../Styles';
 import { ThemeContext } from '../util/ThemeManager';
 

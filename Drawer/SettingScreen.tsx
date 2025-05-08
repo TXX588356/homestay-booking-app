@@ -1,6 +1,5 @@
-import { View, Text, Switch, StyleSheet, Alert } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
-import { Appearance, ColorSchemeName } from 'react-native'
+import { View, Alert } from 'react-native'
+import React, { useContext } from 'react'
 import { ExternalStyles } from '../Styles'
 import MySwitch from '../components/MySwitch'
 import { ThemeContext } from '../util/ThemeManager'

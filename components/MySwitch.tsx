@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, Appearance, ColorSchemeName, Switch } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
+import { View, Switch } from 'react-native'
+import React, { useContext} from 'react'
 import { ThemeContext } from '../util/ThemeManager'
 import ThemedText from './ThemedText';
 import { ExternalStyles } from '../Styles';
@@ -23,26 +23,3 @@ const MySwitch = () => {
 
 
 export default MySwitch;
-
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'flex-start',
-    },
-    switchContainer: {
-      flexDirection: 'row',
-      alignItems: 'flex-start',
-      height: 60,
-    },
-    switchLabel: {
-      flex: 4,
-      fontSize: 20,
-      margin: 10,
-    },
-    switch: {
-      flex: 1,
-      margin: 10,
-    },
-  });
-  

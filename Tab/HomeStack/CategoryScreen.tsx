@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native';
 import React, { useContext } from 'react';
 import { RootStackParamList } from '../../Types';
 import PropertyCard from '../../components/PropertyCard';

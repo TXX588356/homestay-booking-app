@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { View, TextInput, TouchableOpacity } from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
@@ -13,16 +13,25 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ placeholder, value, onCha
     const [secureTextEntry, setSecureTextEntry] = useState(true);
   
     return (
-      <View style={styles.container}>
+      <View style={{
+        marginBottom: 10,
+        backgroundColor: '#f8f8f8',
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#dddddd'}}>
         <TextInput
-          style={styles.input}
+          style={{width: '100%'}}
           placeholder={placeholder}
           value={value}
           secureTextEntry={secureTextEntry}
           onChangeText={onChangeText}
         />
         <TouchableOpacity
-          style={styles.eyeIconContainer}
+          style={{
+            position: 'absolute',
+            right: 16,
+            height: 50,
+            justifyContent: 'center',}}
           onPress={() => setSecureTextEntry(!secureTextEntry)}
         >
           <Ionicons
@@ -34,24 +43,5 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ placeholder, value, onCha
       </View>
     );
   };
-
-const styles = StyleSheet.create({
-  container: { 
-    marginBottom: 10,
-    backgroundColor: '#f8f8f8',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#dddddd'
-  },
-  input: { 
-    width: "100%" 
-  },
-  eyeIconContainer: {
-    position: 'absolute',
-    right: 16,
-    height: 50,
-    justifyContent: 'center',
-  },
-});
 
 export default PasswordInput;

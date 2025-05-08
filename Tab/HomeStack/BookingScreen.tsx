@@ -1,12 +1,10 @@
-import { View, Text, Image, Button, Dimensions, StyleSheet, TouchableOpacity, ScrollViewComponent, Alert } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
+import { View, Alert } from 'react-native'
+import React, { useContext, useState } from 'react'
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../Types';
 import { ExternalStyles } from '../../Styles';
-import Carousel from '../../components/Carousel';
 import { ScrollView } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import PropertyBottomTab from '../../components/PropertyBottomTab';
 import Calendar from '../../components/Calendar';
 import LoadingIndicator, { useTransitionLoading } from '../../components/LoadingIndicator';
 import BackButton from '../../components/BackButton';

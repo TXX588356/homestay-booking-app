@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import { Button } from "react-native";
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import {createStackNavigator, StackNavigationOptions} from '@react-navigation/stack';
-import TabNavigator from './Tab/Tabs'
+import {createStackNavigator} from '@react-navigation/stack';
 import { RootStackParamList } from "./Types";
 import DrawerNavigator from "./Drawer/App";
 import AuthStack from "./Auth/App";

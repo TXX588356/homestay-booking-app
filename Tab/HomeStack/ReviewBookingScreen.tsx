@@ -1,12 +1,10 @@
-import React, { useContext, useMemo, useRef } from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
-import { Text, Button } from 'react-native-paper';
+import React, { useContext} from 'react';
+import { View, ScrollView } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../Types';
 import { ExternalStyles } from '../../Styles';
 import MyButton from '../../components/MyButton';
 import BackButton from '../../components/BackButton';
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import LoadingIndicator, { useTransitionLoading } from '../../components/LoadingIndicator';
 import BookingSummary from '../../components/BookingSummary';
 import ThemedText from '../../components/ThemedText';

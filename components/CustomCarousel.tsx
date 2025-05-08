@@ -1,4 +1,4 @@
-import { View, Text, FlatList, Dimensions, Image, StyleSheet } from 'react-native'
+import { View, Dimensions, Image } from 'react-native'
 import React, { useState } from 'react'
 import Carousel from 'react-native-reanimated-carousel';
 import { useSharedValue } from 'react-native-reanimated';
