@@ -123,7 +123,7 @@ const PaymentMethodScreen = ({route, navigation}: Props) => {
             paymentMethod: selectedMethod
           };
 
-          fetch(`${config.settings.serverPath}/api/bookingHistory`, {  // Replace with your LAN IP!
+          fetch(`${config.settings.bookingServerPath}/api/bookingHistory`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(bookingData),
