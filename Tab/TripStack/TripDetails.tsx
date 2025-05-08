@@ -25,7 +25,7 @@ const TripDetails = ({route, navigation}: any) => {
         <Text style={{marginVertical: 5}}>
           {booking.startDate} ~ {booking.endDate} ({booking.numDays} nights)
         </Text>
-        <Text style={{marginVertical: 5}}>Guests: {booking.numDays} {'\n\n'}</Text>
+        <Text style={{marginVertical: 5}}>Guests: {booking.numGuests} {'\n\n'}</Text>
       
         <Text style={ExternalStyles.sectionTitle}>Price Breakdown</Text>
         <View style={ExternalStyles.priceRow}>
