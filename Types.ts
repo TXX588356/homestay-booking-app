@@ -32,7 +32,6 @@ export type RootStackParamList = {
   BookingScreen: {property: any},
   Wishlist: {property: any},
   AccountSettingScreen: {info: any},
-  
 
 };
 

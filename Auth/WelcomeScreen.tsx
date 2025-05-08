@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Image, Dimen
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../Types';
+import { ExternalStyles } from '../Styles';
 
 type NavigationProp = StackNavigationProp<RootStackParamList, 'Welcome'>;
 
@@ -10,29 +11,29 @@ const WelcomeScreen = () => {
     const navigation = useNavigation<NavigationProp>();
 
     return (
-        <View style={styles.container}>
+        <View style={ExternalStyles.container}>
             <Image
                 source={require('../img/background-image.jpg')} 
                 style={{height: Dimensions.get('window').width, width: Dimensions.get('window').width}}
             />
-            <View style={styles.textContainer}>
-                <Text style={styles.header}>Welcome to HomeStay Booking App</Text>
-                <Text style={styles.subHeader}>Find your perfect stay</Text>
+            <View style={{padding: 20, alignItems: 'center',}}>
+                <Text style={ExternalStyles.mainTitle}>Welcome to HomeStay Booking App</Text>
+                <Text style={[ExternalStyles.subTitle, {fontSize: 15}]}>Find your perfect stay</Text>
             </View>
 
-            <View style={styles.buttonContainer}>
+            <View style={{padding: 20}}>
                 <TouchableOpacity
-                    style={styles.button}
+                    style={[ExternalStyles.button, {marginTop: 0,marginBottom: 15, backgroundColor: '#ff385c'}]}
                     onPress={() => navigation.navigate('Login', { mode: 'register' })} 
                     >
-                    <Text style={styles.buttonText}>Register</Text>
-                    </TouchableOpacity>
+                    <Text style={[ExternalStyles.sectionTitle, {color: 'white'}]}>Register</Text>
+                  </TouchableOpacity>
 
                     <TouchableOpacity
-                    style={[styles.button, styles.loginButton]}
+                    style={[ExternalStyles.button, {marginTop: 10}]}
                     onPress={() => navigation.navigate('Login', { mode: 'login' })}
                     >
-                    <Text style={styles.buttonText}>Login</Text>
+                    <Text style={[ExternalStyles.sectionTitle, {color: 'white'}]}>Login</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -42,45 +43,3 @@ const WelcomeScreen = () => {
 };
 
 export default WelcomeScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  textContainer: {
-    padding: 20,
-    alignItems: 'center',
-  },
-  header: {
-    fontSize: 30,
-    fontFamily: 'Montserrat-Bold',
-    color: 'black'
-  },
-  subHeader: {
-    fontSize: 15,
-    fontFamily: 'Montserrat-Medium',
-  },
-  buttonContainer: {
-    padding: 20,
-  },
-
-  button: {
-    backgroundColor: '#ff385c',
-    padding: 15,
-    marginBottom: 20,
-    borderRadius: 10,
-    alignItems: 'center'
-    
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: '600',
-    fontFamily: 'Montserrat-Bold',
-  },
-  loginButton: {
-    backgroundColor: '#ff5a5f',
-  }
-
-});

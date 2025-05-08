@@ -84,7 +84,7 @@ const Wishlist = ({route, navigation}: Props) => {
       </View>
 
       
-      {wishlist.length === 0 ?   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text style={{fontSize: 30}}>No wishlist added</Text></View>: null}
+      {wishlist.length === 0 ?   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text style={{fontSize: 30, color: theme.text}}>No wishlist added</Text></View>: null}
     
           <FlatList
             style={{marginTop: 40}}

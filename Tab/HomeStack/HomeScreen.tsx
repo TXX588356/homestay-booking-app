@@ -20,7 +20,6 @@ import CategoryScreen from './CategoryScreen';
 import { allProperties } from '../../properties';
 import { ExternalStyles } from '../../Styles';
 import { ThemeContext } from '../../util/ThemeManager';
-import { ToggleButton } from '../../App';
 import ThemedText from '../../components/ThemedText';
 
 
@@ -83,7 +82,7 @@ const App = ({ route, navigation}: Props) => {
                     </ThemedText>
                 </View>
                 
-                <View style={[ExternalStyles.searchArea, { width: windowWidth * 0.9, backgroundColor: colors.surface }]}>
+                {/* <View style={[ExternalStyles.searchArea, { width: windowWidth * 0.9, backgroundColor: colors.surface }]}>
                     <Ionicons
                         name= 'search'
                         color= 'grey'
@@ -99,7 +98,7 @@ const App = ({ route, navigation}: Props) => {
                         placeholderTextColor={colors.outline}
                         onChangeText={text => setSearchQuery(text)}
                     />
-               </View>
+               </View> */}
 
                <View>
                <Text variant="titleLarge" style={[ExternalStyles.subHeaderText, { color: colors.primary }]}>Browse by Category</Text>

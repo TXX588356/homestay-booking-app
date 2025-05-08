@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { User } from '../services/db-service'
+import { User } from '../db-service';
 import { useIsFocused } from '@react-navigation/native'
 import { ThemeContext } from '../util/ThemeManager';
 import ThemedText from '../components/ThemedText';

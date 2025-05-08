@@ -11,13 +11,6 @@ import {ThemeProvider} from './util/ThemeManager';
 import { PaperProvider } from 'react-native-paper';
 
 
-/* export const ToggleButton = () => {
-    return(
-        <Button
-        title="Toggle"
-        onPress={() => {}}/>
-    )
-} */
 
 const Stack = createStackNavigator<RootStackParamList>();
 const App = () => {
@@ -26,7 +19,7 @@ const App = () => {
             <GestureHandlerRootView style={{ flex: 1 }}>
                 <PaperProvider>
                     <NavigationContainer>
-                        <Stack.Navigator initialRouteName="Main" screenOptions={{ headerShown: false }}>
+                        <Stack.Navigator initialRouteName="Auth" screenOptions={{ headerShown: false }}>
                             <Stack.Screen name="Auth" component={AuthStack}/>
                             <Stack.Screen name="Main" component={DrawerNavigator}/>
                         </Stack.Navigator>
@@ -40,5 +33,4 @@ const App = () => {
     )
 }
 
-//need to add one more welcome screen
 export default App;

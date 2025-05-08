@@ -143,3 +143,82 @@ export const validateUser = async (db: SQLiteDatabase, email: string, password: 
         return null;
     }
 }
+
+export const updateUserInfo = async (db: SQLiteDatabase, userId: number, newName: string, newPhoneNum: string) : Promise<boolean> => {
+    try {
+        console.log(`Attempting to update user info for user ID:${userId}`);
+
+        const checkQuery  ='SELECT * FROM users WHERE id = ? ';
+        const checkResults = await db.executeSql(checkQuery, [userId]);    
+
+        if (!checkResults || checkResults[0].rows.length === 0) {
+            console.log(`User with ID ${userId} not found`);
+            return false;
+        }
+
+        const updateQuery = 'UPDATE users SET name = ?, phoneNumber = ? WHERE id = ?';
+        const updateResults = await db.executeSql(updateQuery, [newName, newPhoneNum, userId]);
+
+        const rowsAffected = updateResults?.[0]?.rowsAffected || 0;
+        console.log(`User info update result - row affected: ${rowsAffected}`);
+        return rowsAffected > 0;
+    }catch(error) {
+        console.error('Error updating user info:', error);
+        return false;
+    }
+}
+
+
+export const updateUserPassword = async (db: SQLiteDatabase, userId: number, newPassword: string) : Promise<boolean> => {
+    try {
+        console.log(`Attempting to update password for user ID:${userId}`);
+
+        const checkQuery  ='SELECT * FROM users WHERE id = ? ';
+        const checkResults = await db.executeSql(checkQuery, [userId]);
+
+        if (!checkResults || checkResults[0].rows.length === 0) {
+            console.log(`User with ID ${userId} not found`);
+            return false;
+        }
+
+        // Update password
+        const updateQuery = 'UPDATE users SET password = ? WHERE id = ?';
+        const updateResults = await db.executeSql(updateQuery, [newPassword, userId]);
+
+        const rowsAffected = updateResults?.[0]?.rowsAffected || 0;
+        console.log(`Password update result - rows affected: ${rowsAffected}`);
+        return rowsAffected > 0;
+    } catch (error) {
+        console.error("Error updating user password:", error);
+        return false;
+    }
+}
+
+export const deleteUserAccount = async(db: SQLiteDatabase, userId: number) : Promise<boolean> => {
+    try {
+        console.log(`Attempting to delete user with ID:${userId}`);
+        const query = 'DELETE FROM users WHERE id = ?';
+        const result = await db.executeSql(query, [userId]);
+
+        if (result && result.length > 0 && result[0].rowsAffected > 0) {
+            console.log(`User with ID ${userId} deleted successfully`);
+            return true;
+          } else {
+            console.log(`No user found with ID: ${userId}`);
+            return false;
+          }
+    }catch(error) {
+        console.error('Error deleting user account: ', error);
+        return false;
+    }
+}
+
+export const updateUserForgotPassword = async(db: SQLiteDatabase, email: string, newPassword: string) : Promise<boolean> =>{
+    try {
+        const result = await db.executeSql('UPDATE users SET password = ? WHERE email = ?', [newPassword, email])
+        return result[0].rowsAffected > 0;  //only return true if affected row is more than 0
+    } catch(error) {
+        console.error('Failed to update password:', error);
+        return false;
+    }
+}

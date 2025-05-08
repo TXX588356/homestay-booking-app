@@ -7,6 +7,11 @@ export const ExternalStyles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff'
     },
+    mainTitle: {
+        fontSize: 30,
+        fontFamily: 'Montserrat-Bold',
+        color: 'black'
+    },
     SubHeader: {
         backgroundColor: '#ff5a5f',
     },
@@ -32,6 +37,15 @@ export const ExternalStyles = StyleSheet.create({
     inputContainer: {
         marginBottom: 10,
     },
+    
+    input: {
+        height: 50,
+        borderWidth: 1,
+        borderColor: '#dddddd',
+        borderRadius: 8,
+        backgroundColor: '#f8f8f8',
+        paddingHorizontal: 10,
+    },
 
     sectionTitle: {
         fontSize: 18,
@@ -42,7 +56,21 @@ export const ExternalStyles = StyleSheet.create({
         fontWeight: '700',
     },
 
-    searchArea: {
+    authLabel: {
+        fontSize: 16,
+        fontWeight: '500',
+        marginBottom: 8,
+        fontFamily: 'Montserrat-Bold'
+    },
+
+    loginText: {
+        color: '#ff5a5f',
+        fontWeight: 'bold',
+        marginLeft: 5,
+        fontFamily: 'Montserrat-Regular'
+    },
+
+   /*  searchArea: {
         marginTop: 20,
         flexDirection: 'row',
         alignItems: 'center',
@@ -55,7 +83,7 @@ export const ExternalStyles = StyleSheet.create({
         shadowOffset: { width: 0, height: 3 },
         shadowOpacity: 0.2,
         shadowRadius: 4,
-    },
+    }, */
 
     button: {
         backgroundColor: '#ff5a5f',

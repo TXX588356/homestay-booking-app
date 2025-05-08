@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, Alert } from 'react-native'
 import {TextInput} from "react-native-paper"
 import React, { useContext, useEffect, useState } from 'react'
 import { StackScreenProps } from '@react-navigation/stack';
@@ -9,6 +9,11 @@ import BackButton from '../components/BackButton';
 import { ThemeContext } from '../util/ThemeManager';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import config from '../config';
+import { deleteUserAccount, getDBConnection, updateUserInfo, updateUserPassword } from '../db-service';
+
+
+
+
 
 
 const AccountSettingScreen = ({route, navigation}: any) => {
@@ -17,11 +22,14 @@ const AccountSettingScreen = ({route, navigation}: any) => {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phoneNum, setPhoneNum] = useState("");
 
   const [currPassword, setCurrPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newRetypePassword, setNewRetypePassword] = useState("");
 
+  
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     console.log("Updated name: ", name);
   }, [name]);
@@ -42,49 +50,109 @@ const AccountSettingScreen = ({route, navigation}: any) => {
     console.log('Updated Confirm New Password:', newRetypePassword);
   }, [newRetypePassword]);
 
+/*   const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phoneNum: '',
+  }); */
+
 
   
-  /* const handleUpdateInfo = async () => {
-    try {
-      const userString = await AsyncStorage.getItem('currentUser');
-      if(!userString) {
-        console.error("No user data found.");
+  const handleUpdateInfo = async () => {
+    if(!name || !phoneNum) {
+      Alert.alert('Error', 'Some fields are empty');
+      return;
+    }
+    if (!/^\d{10,15}$/.test(phoneNum)) {
+      Alert.alert('Invalid Phone Number', 'Please enter a valid phone number.', [{ text: 'OK' }]);
+      setIsLoading(false);
+      return;
+    }
+
+    try{
+      const userData = await AsyncStorage.getItem('currentUser');
+      const currentUser = userData ? JSON.parse(userData) : null;
+
+      if(!currentUser || !currentUser.id) {
+        Alert.alert('Error', 'User not found in local storage');
         return;
       }
 
-      const user = JSON.parse(userString);
-      const userID = user.id;
+      const db = await getDBConnection();
 
-      console.log("Updating user info for ID: ", userID);
-      console.log("New data: ", {name, email});
+      const success = await updateUserInfo(db, currentUser.id, name, phoneNum);
+      if(success) {
+        Alert.alert('Success', 'User info updated successfully');
+        setName('');
+        setPhoneNum('');
 
-      const response = await fetch(`${config.settings.serverPath}/api/users/update-info`, {
-        method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          id: user.id,
-          name: name,
-          email: email
-        }),
-    });
+        const updatedUser = {
+          ...currentUser,
+          name,
+          phoneNumber: phoneNum
+        }
 
-    if (response.ok) {
-      const updatedUser = await response.json();
-      console.log('User info updated successfully:', updatedUser);
-      // Optionally, update AsyncStorage with new user data
-      await AsyncStorage.setItem('currentUser', JSON.stringify(updatedUser));
-    } else {
-      const errorData = await response.json();
-      console.error('Failed to update user info:', errorData);
+
+        await AsyncStorage.setItem('currentUser', JSON.stringify(updatedUser));
+        console.log("AsyncStoage updated with new user info")
+      }else {
+        Alert.alert("Error", "Failed to update user info");
+      }
+    } catch(error) {
+      console.error("User info update error:", error)
+      Alert.alert("Error", "Something went wrong")
     }
-  } catch (error) {
-    console.error('Error updating user info:', error);
-  }
    
   };
+
+  const handleUpdatePassword = async () => {
+    if(!newPassword || newPassword !== newRetypePassword) {
+      Alert.alert('Error', 'Password do not match or are empty');
+      return;
+    }
+
+
+    try{
+      const userData = await AsyncStorage.getItem('currentUser');
+      const currentUser = userData ? JSON.parse(userData) : null;
+
+      if(!currentUser || !currentUser.id) {
+        Alert.alert('Error', 'User not found in local storage');
+        return;
+      }
+
+      if(currPassword !== currentUser.password) {
+        Alert.alert('Error', 'Wrong password entered. Please try again');
+        return;
+      }
+
+      if(newPassword.trim().length < 8) {
+        Alert.alert('Password too short', 'Password need to have at least 8 characters.');
+        return;
+      }
+
+      const db = await getDBConnection();
+
+      const success = await updateUserPassword(db, currentUser.id, newPassword);
+      if(success) {
+        Alert.alert('Success', 'Password updated successfully');
+        setCurrPassword('');
+        setNewPassword('');
+        setNewRetypePassword('');
+      }else {
+        Alert.alert("Error", "Failed to update password");
+      }
+    } catch(error) {
+      console.error("Password update error:", error)
+      Alert.alert("Error", "Something went wrong")
+    }
+  }
+
   
- */
+ 
   return (
+    //AsyncStorage.getItem('currentUser').then(data => console.log('currentUser:', data)),
+
     <View style={{flex: 1,backgroundColor: theme.background, paddingLeft: 10, paddingRight: 10}}>
         <View style={ExternalStyles.backButtonContainer}>
           <BackButton/>
@@ -99,19 +167,20 @@ const AccountSettingScreen = ({route, navigation}: any) => {
             }}/>  
           </View>
 
+          {
           <View style={{marginBottom: 20}}>
-            <TextInput label="Email" value={email} 
+            <TextInput label="Phone Number" value={phoneNum} 
             onChangeText={(text) => {
-              console.log("Previous email:", email);
-              setEmail(text);
+              console.log("Previous phone number:", phoneNum);
+              setPhoneNum(text);
             }}/> 
-          </View>
+          </View>}
           
           <MyButton 
           title="Update Info"
           textStyle={{color: 'white', fontWeight: 'bold'}}
           style={{alignSelf: 'center', justifyContent: 'center'}}
-          //onPress={handleUpdateInfo}
+          onPress={handleUpdateInfo}
           />
       
       </View>
@@ -134,6 +203,7 @@ const AccountSettingScreen = ({route, navigation}: any) => {
           <MyButton 
           title="Update Password"
           textStyle={{color: 'white', fontWeight: 'bold'}}
+          onPress={handleUpdatePassword}
           />
 
         </View>
