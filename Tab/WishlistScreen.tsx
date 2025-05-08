@@ -29,7 +29,7 @@ const Wishlist = ({route, navigation}: Props) => {
         if (userString) {
           const user = JSON.parse(userString);
           
-          fetch(`${config.settings.serverPath}/api/wishlist/user/${user.id}`)
+          fetch(`${config.settings.wishlistServerPath}/api/wishlist/user/${user.id}`)
             .then((response) => {
               if (!response.ok) {
                 throw new Error('Failed to fetch wishlist');
@@ -68,8 +68,7 @@ const Wishlist = ({route, navigation}: Props) => {
     for (let category in property) {
       const place = property[category].find(p => p.id === propertyId);
       if (place){
-        const images = place.images.map(img => imageMap[img]);
-        return {...place, images};
+        return place;
       }
     }
     return null;
@@ -93,14 +92,14 @@ const Wishlist = ({route, navigation}: Props) => {
             renderItem={({ item }) => {
     
               const property = getPropertyDetails(item.propertyID);
-              
+
               return (
                 <PropertyCard
                   key={property.id}
                   name={property.name}
                   location={property.location}
                   price={property.price}
-                  images={property.images[0]}
+                  images={imageMap[property.images[0]]}
                   onPress={() => navigation.navigate('PropertyDetails', {propertyId: property.id, data: property})}
                 />
               );
