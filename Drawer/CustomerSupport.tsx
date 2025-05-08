@@ -6,25 +6,46 @@ import {
   TouchableOpacity,
   ScrollView,
   View,
+  ActivityIndicator
 } from 'react-native';
 import { ExternalStyles } from '../Styles'
 import { ThemeContext } from '../util/ThemeManager'
 import io from 'socket.io-client';
 import config from '../config';
 import ThemedText from '../components/ThemedText';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-var socket = io(`${config.settings.serverPath}/chat`, {
+var socket = io(`${config.settings.livechatServerPath}/chat`, {
     transports: ['websocket'],
 });
 
 const CustomerSupport = () => {
     const { theme } = useContext(ThemeContext);
   
-  const [name, setName] = useState('User');  // fixed name for user
+  const [name, setName] = useState('User');
+  const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
   const [chatroom, setChatroom] = useState('');
 
+  const fetchUserToSetName = async() => {
+    try{
+      setLoading(true);
+      const userDataString = await AsyncStorage.getItem('currentUser');
+
+      if(userDataString) {
+        const userData = JSON.parse(userDataString);
+        setName(userData.name);
+      }
+    }catch(error){
+      console.error("Error in fetching user data: ", error);
+    }finally{
+      setLoading(false);
+    }
+  }
+    
   useEffect(() => {
+    fetchUserToSetName();
+
     socket.on('connect', () => {
       console.log(socket.id);
       socket.emit('mobile_client_connected', { connected: true }, (response) => {
@@ -44,15 +65,26 @@ const CustomerSupport = () => {
     });
   }, []);
 
+  if(loading) {
+      return (
+        <View style={[ExternalStyles.container, { justifyContent: 'center', alignItems: 'center' }]}>
+          <ActivityIndicator size="large" color="#ff5a5f" />
+        </View>
+      )
+    }
+
   return (
     <ScrollView style={[ExternalStyles.container, {backgroundColor: theme.background}]}>
       <ThemedText style={{fontSize: 22, fontWeight: 'bold', textAlign: 'center', marginVertical: 10,}}>Chat with us</ThemedText>
-      <TextInput
-        style={[ExternalStyles.output, {color: theme.text}]}
-        value={chatroom}
-        multiline
-        editable={false}
-      />
+      <ScrollView 
+        style={[ExternalStyles.output, {padding: 15}]} 
+        ref={ref => (this.scrollView = ref)}
+        onContentSizeChange={() => this.scrollView.scrollToEnd({ animated: true })}
+      >
+        <Text style={{ color: theme.text }}>
+          {chatroom}
+        </Text>
+      </ScrollView>
       <TextInput
         style={{fontSize: 16, color: theme.text, margin: 10, borderWidth: 2, borderColor: theme.text, borderRadius: 15 }}
         placeholder="Enter message"
