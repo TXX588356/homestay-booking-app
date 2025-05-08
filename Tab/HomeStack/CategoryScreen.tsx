@@ -1,16 +1,15 @@
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import React, { useContext } from 'react';
 import { RootStackParamList } from '../../Types';
-import { allProperties } from '../../properties';
 import PropertyCard from '../../components/PropertyCard';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ExternalStyles } from '../../Styles';
 import { ThemeContext } from '../../util/ThemeManager';
 import ThemedText from '../../components/ThemedText';
+import allProperties from '../../allProperties.json';
+import { imageMap } from '../../imageMap';
 
 type CategoryProps = StackScreenProps<RootStackParamList, 'CategoryScreen'>;
-
-
 
 const CategoryScreen = ({route, navigation}: CategoryProps) => {
     const { theme } = useContext(ThemeContext);
@@ -28,7 +27,7 @@ const CategoryScreen = ({route, navigation}: CategoryProps) => {
                         name={item.name}
                         location={item.location}
                         price={item.price}
-                        images={item.images[0]}
+                        images={imageMap[item.images[0]]}
                         onPress={() => navigation.navigate('PropertyDetails', { data: item})}
                     />
                 ))
@@ -38,6 +37,5 @@ const CategoryScreen = ({route, navigation}: CategoryProps) => {
         </ScrollView>
     )
 }
-
 
 export default CategoryScreen;
