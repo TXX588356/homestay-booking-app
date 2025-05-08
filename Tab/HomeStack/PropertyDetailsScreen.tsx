@@ -13,17 +13,18 @@ import LoadingIndicator, { useTransitionLoading } from '../../components/Loading
 import BackButton from '../../components/BackButton';
 import { ThemeContext } from '../../util/ThemeManager';
 import ThemedText from '../../components/ThemedText';
+import { imageMap } from '../../imageMap';
 
 const { width } = Dimensions.get('window');
-
 
 const PropertyDetailsScreen = ({route, navigation}: Props) => {
     const {data} = route.params;
 
     const loading = useTransitionLoading(navigation);
 
-     const { theme } = useContext(ThemeContext);
+    const { theme } = useContext(ThemeContext);
          
+    let images = data.images.map(img => imageMap[img])
 
     if(loading) {
         return <LoadingIndicator/>;
@@ -35,7 +36,7 @@ const PropertyDetailsScreen = ({route, navigation}: Props) => {
             <View style={ExternalStyles.backButtonContainer}>
                 <BackButton/>
             </View>
-                <CustomCarousel data={data.images}/>
+                <CustomCarousel data={images}/>
 
                 <View style={[ExternalStyles.propertyTitle, {paddingTop: 70}]}>
                     <ThemedText style={ExternalStyles.titleText}>{data.name}</ThemedText>
@@ -54,18 +55,14 @@ const PropertyDetailsScreen = ({route, navigation}: Props) => {
                         <ThemedText key={index} style={{fontSize: 16, marginVertical: 2, lineHeight: 25, fontFamily: 'Montserrat-Medium'}}>- {amenity}</ThemedText>
                     ))}
                 </View>
-
-                
             </ScrollView>
+            
             <PropertyBottomTab
                 propertyData={data}
                 addToWishlist={(item) => {
                     console.log("Added to wishlist: ", item)
                 }}/>
         </View>
-        
-
-       
     
     )
 }
