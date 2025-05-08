@@ -17,11 +17,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import PropertyCard from '../../components/PropertyCard';
 import CategoryScreen from './CategoryScreen';
-import { allProperties } from '../../properties';
 import { ExternalStyles } from '../../Styles';
 import { ThemeContext } from '../../util/ThemeManager';
 import ThemedText from '../../components/ThemedText';
-
+import allProperties from '../../allProperties.json';
+import { imageMap } from '../../imageMap';
 
 
 export type Props = StackScreenProps<RootStackParamList, 'HomePage'>;
@@ -62,7 +62,6 @@ const App = ({ route, navigation}: Props) => {
     ]
 
     const [wishList, setWishList] = useState<PropertyType[]>([]);
-
 
     const [searchQuery, setSearchQuery] = useState<any>('');
 
@@ -130,18 +129,15 @@ const App = ({ route, navigation}: Props) => {
                             key={item.id}
                             name={item.name}
                             location={item.location}
-                            price={item.price}
-                            images={item.images[0]}
+                            price={item.price.toString()}
+                            images={imageMap[item.images[0]]}
                             onPress={() => navigation.navigate('PropertyDetails', {propertyId: item.id, data: item})}
                         />
                     ))}
                </View>
             </View>
         </ScrollView>
-
-        
     );
 }
-
 
 export default App;
