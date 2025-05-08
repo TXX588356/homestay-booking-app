@@ -19,7 +19,7 @@
         });
 
         function send() {
-            let username = 'Admin';
+            let username = 'Customer Service Agent';
             let message = document.getElementById('message').value;
 
             let data = {
@@ -31,15 +31,15 @@
             document.getElementById('message').value = '';
         }
     </script>
-    <title>Admin Chat</title>
+    <title>Customer Support Chat</title>
 </head>
 <body>
-    <h1 class="text-4xl font-bold text-center my-6">Admin Chat Panel</h1>
+    <h1 class="text-4xl font-bold text-center my-6">Homestay Booking App Customer Support</h1>
 
     <form class="max-w-3xl mx-auto p-4 bg-white shadow-2xl rounded-lg">
         <table class="min-w-full border-separate border-spacing-2">
             <tr>
-                <th class="text-lg font-medium text-gray-700 py-2">Chat Room</th>
+                <th class="text-lg font-medium text-gray-700 py-2">Chat Box</th>
                 <td>
                     <textarea id="chatroom" readonly cols="80" rows="20"
                         class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
