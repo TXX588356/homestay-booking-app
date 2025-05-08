@@ -28,7 +28,7 @@ const PropertyBottomTab = ({propertyData, addToWishlist}: Props) => {
               const userID = parseInt(user.id);
               const propertyID = String(propertyData.id);
 
-              fetch(`${config.settings.serverPath}/api/wishlist/user/${userID}/property/${propertyID}`)
+              fetch(`${config.settings.wishlistServerPath}/api/wishlist/user/${userID}/property/${propertyID}`)
                 .then((response) => {
                   return response.json();
                 })
@@ -82,7 +82,7 @@ const PropertyBottomTab = ({propertyData, addToWishlist}: Props) => {
             const user = JSON.parse(userString);
             const userID = user.id;
   
-            fetch(`${config.settings.serverPath}/api/wishlist`, {
+            fetch(`${config.settings.wishlistServerPath}/api/wishlist`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({userID: userID, propertyID: propertyData.id}),
@@ -108,7 +108,7 @@ const PropertyBottomTab = ({propertyData, addToWishlist}: Props) => {
             const user = JSON.parse(userString);
             const userID = user.id;
   
-            fetch(`${config.settings.serverPath}/api/wishlist`, { 
+            fetch(`${config.settings.wishlistServerPath}/api/wishlist`, { 
               method: 'DELETE',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({userID: userID, propertyID: propertyData.id}),
