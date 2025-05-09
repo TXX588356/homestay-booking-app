@@ -14,7 +14,7 @@ type CategoryProps = StackScreenProps<RootStackParamList, 'CategoryScreen'>;
 const CategoryScreen = ({route, navigation}: CategoryProps) => {
     const { theme } = useContext(ThemeContext);
     
-    const {catName} = route.params;
+    const {catName, getUserId} = route.params;
     const categoryData = allProperties[catName];
 
     return (
@@ -28,7 +28,7 @@ const CategoryScreen = ({route, navigation}: CategoryProps) => {
                         location={item.location}
                         price={item.price}
                         images={imageMap[item.images[0]]}
-                        onPress={() => navigation.navigate('PropertyDetails', { data: item})}
+                        onPress={() => navigation.navigate('PropertyDetails', { propertyId:item.id, data: item, getUserId: getUserId})}
                     />
                 ))
             ) : (
