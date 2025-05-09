@@ -16,30 +16,27 @@ import ThemedText from '../../components/ThemedText';
 type Props = StackScreenProps<RootStackParamList, 'BookingScreen'>;
 
 const BookingScreen = ({route, navigation}: Props) => {
-      const {property} = route.params;
-      const [startDate, setStartDate] = useState<Date | null>(null);
-      const [endDate, setEndDate] = useState<Date | null>(null);
-      const [numGuests, setNumGuests] = useState(1);
+  const {property, getUserId} = route.params;
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [numGuests, setNumGuests] = useState(1);
 
-      const { theme } = useContext(ThemeContext);
-      const loading = useTransitionLoading(navigation);
+  const { theme } = useContext(ThemeContext);
+  const loading = useTransitionLoading(navigation);
 
+  if(loading) {
+    return <LoadingIndicator/>;
+  }
 
-
-      if(loading) {
-        return <LoadingIndicator/>;
-      }
-
-      const handleDateChange = (start: Date, end: Date) => {
-        setStartDate(start);
-        setEndDate(end);
-      }
+  const handleDateChange = (start: Date, end: Date) => {
+    setStartDate(start);
+    setEndDate(end);
+  }
       
-      const handleGuestsChange = (guests: {adults: number; children: number; infants: number}) => {
-        const totalGuests = guests.adults + guests.children + guests.infants;
-        setNumGuests(totalGuests);
-      }
-
+  const handleGuestsChange = (guests: {adults: number; children: number; infants: number}) => {
+    const totalGuests = guests.adults + guests.children + guests.infants;
+    setNumGuests(totalGuests);
+  }
     
   return (
     <ScrollView style={[ExternalStyles.container, {backgroundColor: theme.background}]}>
@@ -64,8 +61,6 @@ const BookingScreen = ({route, navigation}: Props) => {
 
       </View>
           
-       
-      
       <View style={ExternalStyles.ContainerWithUnderline}>
         <ThemedText style={ExternalStyles.sectionTitle}>Please Select Number of Guests</ThemedText>
         <GuestSelector onGuestsChange={handleGuestsChange}/>
@@ -80,17 +75,12 @@ const BookingScreen = ({route, navigation}: Props) => {
             return;
           }
          
-          //console.log(numOfDays);
-          //console.log(property.price);
           navigation.navigate('ReviewBookingScreen', {
-            property, startDate: startDate.toISOString(), endDate: endDate.toISOString(), numGuests
-          })
+            property, startDate: startDate.toISOString(), endDate: endDate.toISOString(), numGuests, getUserId: getUserId})
         }}/>
       </View>
-
-
     </ScrollView>
   )
 }
 
-export default BookingScreen
+export default BookingScreen;
