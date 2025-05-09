@@ -2,22 +2,15 @@ import React, { useContext, useState } from 'react';
 import {
     View,
     TouchableOpacity,
-    StyleSheet,
     ScrollView,
-    Image,
-    Alert,
     Dimensions,
     FlatList,
-    Button,
-    Linking
   } from 'react-native';
   import { useTheme, Text, TextInput, Card } from 'react-native-paper'; 
 import type { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../Types'; 
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import PropertyCard from '../../components/PropertyCard';
-import CategoryScreen from './CategoryScreen';
 import { ExternalStyles } from '../../Styles';
 import { ThemeContext } from '../../util/ThemeManager';
 import ThemedText from '../../components/ThemedText';
@@ -38,7 +31,7 @@ type PropertyType = {
     images: any;
 }
 
-const App = ({ route, navigation}: Props) => {
+const App = ({ route, navigation }: Props) => {
     const {colors} = useTheme();
 
     const [category, setCategory] = useState([
@@ -79,10 +72,6 @@ const App = ({ route, navigation}: Props) => {
         }
     };
 
-    const [wishList, setWishList] = useState<PropertyType[]>([]);
-
-    const [searchQuery, setSearchQuery] = useState<any>('');
-
     const {theme} = useContext(ThemeContext);
    
     return ( 
@@ -98,24 +87,6 @@ const App = ({ route, navigation}: Props) => {
                         Find your perfect stay
                     </ThemedText>
                 </View>
-                
-                {/* <View style={[ExternalStyles.searchArea, { width: windowWidth * 0.9, backgroundColor: colors.surface }]}>
-                    <Ionicons
-                        name= 'search'
-                        color= 'grey'
-                        size={20}
-                        style={{marginRight: 10}}
-                    />  
-                    <TextInput 
-                        style={{ flex: 1, backgroundColor: 'transparent' }}
-                        placeholder= 'Where are you going?'
-                        value={searchQuery}
-                        underlineColor="transparent"
-                        activeUnderlineColor='transparent'
-                        placeholderTextColor={colors.outline}
-                        onChangeText={text => setSearchQuery(text)}
-                    />
-               </View> */}
 
                <View>
                <Text variant="titleLarge" style={[ExternalStyles.subHeaderText, { color: colors.primary }]}>Browse by Category</Text>
