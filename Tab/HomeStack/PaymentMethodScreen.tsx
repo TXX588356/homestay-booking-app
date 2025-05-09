@@ -1,15 +1,12 @@
 import React, { useContext, useMemo, useRef, useState } from 'react';
-import { View, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
-import { Text, Button,TextInput, HelperText } from 'react-native-paper';
+import { View, ScrollView, Alert } from 'react-native';
+import { Text, TextInput, HelperText } from 'react-native-paper';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../Types';
 import { ExternalStyles } from '../../Styles';
 import MyButton from '../../components/MyButton';
 import BackButton from '../../components/BackButton';
 import { RadioButton } from 'react-native-paper';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import LoadingIndicator, { useTransitionLoading } from '../../components/LoadingIndicator';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import BottomSheet from '@gorhom/bottom-sheet';
 import config from "../../config";
 import { ThemeContext } from '../../util/ThemeManager';
@@ -104,14 +101,42 @@ const PaymentMethodScreen = ({route, navigation}: Props) => {
       }
     };
 
-    const saveBookingDetailsToDB = () => {
+    const saveBookingDetailsToDB = async () => {
       
+      const userID = await route.params.getUserId();
+      const {propertyID, startDate, endDate, numGuests, numDays} = route.params;
+
+      const bookingData = {
+        userID: parseInt(userID),
+        propertyID,
+        startDate,
+        endDate,
+        numGuests,
+        numDays,
+        paymentMethod: selectedMethod
+      };
+
+      fetch(`${config.settings.bookingServerPath}/api/bookingHistory`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bookingData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('Booking created:', data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        })
+
+      /*
       AsyncStorage.getItem('currentUser')
       .then((userString) => {
         if (userString) {
+          const {propertyID, startDate, endDate, numGuests, numDays} = route.params;
           const user = JSON.parse(userString);
           const userID = user.id;
-          const {propertyID, startDate, endDate, numGuests, numDays} = route.params;
+          
 
           const bookingData = {
             userID: parseInt(userID),
@@ -139,6 +164,7 @@ const PaymentMethodScreen = ({route, navigation}: Props) => {
       .catch((error) => {
         console.error('Error reading AsyncStorage:', error);
       });
+      */
     };
 
     const renderContent = () => {
@@ -291,9 +317,7 @@ const PaymentMethodScreen = ({route, navigation}: Props) => {
             labelStyle={{ fontSize: 16, color: theme.text }}
             color= {theme.text}
           />
-        </RadioButton.Group>
-
-        
+        </RadioButton.Group>     
 
         <View style={ExternalStyles.sectionContainer}>
         <MyButton
@@ -303,8 +327,6 @@ const PaymentMethodScreen = ({route, navigation}: Props) => {
         />
       </View>
       </ScrollView>
-
-      
 
       <BottomSheet
         ref={bottomSheetRef}
