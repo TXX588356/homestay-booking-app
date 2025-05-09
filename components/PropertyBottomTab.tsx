@@ -4,7 +4,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import config from '../config';
 import { ThemeContext } from '../util/ThemeManager';
 import ThemedText from './ThemedText';
@@ -13,13 +12,15 @@ import { ExternalStyles } from '../Styles';
 type Props = {
     propertyData: any,
     addToWishlist: (item: any) => void;
+    getUserId: () => any;
 };
 
-const PropertyBottomTab = ({propertyData, addToWishlist}: Props) => {
+const PropertyBottomTab = ({propertyData, addToWishlist, getUserId}: Props) => {
     const navigation = useNavigation();
     const [liked, setLiked] = useState(false);
     const { theme } = useContext(ThemeContext);
 
+    /*
     const fetchWishlistItemFromDB = () => {
         AsyncStorage.getItem('currentUser')
           .then((userString) => {
@@ -50,15 +51,35 @@ const PropertyBottomTab = ({propertyData, addToWishlist}: Props) => {
             console.error('Error reading AsyncStorage:', error);
           });
       };
-      
-      
+      */
+    const fetchWishlistItemFromDB = async () => {
+      const userID = await getUserId();
+      const propertyID = String(propertyData.id);
+
+      fetch(`${config.settings.wishlistServerPath}/api/wishlist/user/${userID}/property/${propertyID}`)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          if (Object.keys(data).length !== 0) {
+            // Current property is saved as wishlist in the database
+            setLiked(true);
+            console.log('Fetched wishlist item from database:', data);
+          } else {
+            console.log("Fetched wishlist: This property is not in user's wishlist");
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching wishlist item:', error);
+        })
+      };
       
     useEffect(() => {
-        fetchWishlistItemFromDB()
-        }, []);
+      fetchWishlistItemFromDB()
+    }, []);
 
     const handleReserve = () => {
-        navigation.navigate('BookingScreen', {property: propertyData});
+      navigation.navigate('BookingScreen', {property: propertyData, getUserId: getUserId});
     };
 
     const handlePress = () => {
@@ -73,7 +94,8 @@ const PropertyBottomTab = ({propertyData, addToWishlist}: Props) => {
             ToastAndroid.show('Removed from Wishlist', ToastAndroid.LONG);
         }
     };
-      
+    
+    /*
     const saveWishlistToDB = () => {
       
         AsyncStorage.getItem('currentUser')
@@ -99,7 +121,44 @@ const PropertyBottomTab = ({propertyData, addToWishlist}: Props) => {
           console.error('Error reading AsyncStorage:', error);
         });
     };
+    */
 
+    const saveWishlistToDB = async () => {
+      const userID = await getUserId();
+      const propertyID = String(propertyData.id);
+      
+      fetch(`${config.settings.wishlistServerPath}/api/wishlist`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({userID: userID, propertyID: propertyID}),
+      })
+      .then((response) => response.json())
+      .then((data) => {
+          console.log('Wishlist added to database:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      })
+    };
+
+    const removeWishlistFromDB = async () => {
+      const userID = await getUserId();
+      const propertyID = String(propertyData.id);
+
+      fetch(`${config.settings.wishlistServerPath}/api/wishlist`, { 
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({userID: userID, propertyID: propertyID}),
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Wishlist removed from database:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      })
+    };
+    /*
       const removeWishlistFromDB = () => {
       
         AsyncStorage.getItem('currentUser')
@@ -125,6 +184,7 @@ const PropertyBottomTab = ({propertyData, addToWishlist}: Props) => {
           console.error('Error reading AsyncStorage:', error);
         });
     };
+    */
 
     return (
         <View style={[ExternalStyles.bottomContainer, {backgroundColor: theme.background}]}>
