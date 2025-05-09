@@ -22,8 +22,46 @@ const Wishlist = ({route, navigation}: Props) => {
 
   const {theme} = useContext(ThemeContext);
 
+  const getCurrentUserId = async () => {
+    try {
+      const userString = await AsyncStorage.getItem('currentUser');
+      if (userString) {
+        const user = JSON.parse(userString);
+        const userID = parseInt(user.id);
+        return userID;
+      } else {
+        console.log('No user found in AsyncStorage');
+        return null;
+      }
+    } catch (error) {
+        console.error('Error reading AsyncStorage:', error);
+        return null;
+    }
+  };
+
   // Load current user and fetch wishlist
-  const fetchWishlist = () => {
+  const fetchWishlist = async () => {
+    const userId = await getCurrentUserId();
+
+    fetch(`${config.settings.wishlistServerPath}/api/wishlist/user/${userId}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch wishlist');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setWishlist(data);
+        console.log("Fetched user's wishlist from database: ");
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching wishlist:', error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+    /*
     AsyncStorage.getItem('currentUser')
       .then((userString) => {
         if (userString) {
@@ -54,6 +92,7 @@ const Wishlist = ({route, navigation}: Props) => {
         console.error('Error reading AsyncStorage:', error);
         setLoading(false);
       });
+      */
   };
 
   useFocusEffect(
@@ -82,7 +121,6 @@ const Wishlist = ({route, navigation}: Props) => {
         <BackButton/>
       </View>
 
-      
       {wishlist.length === 0 ?   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text style={{fontSize: 30, color: theme.text}}>No wishlist added</Text></View>: null}
     
           <FlatList
@@ -100,7 +138,7 @@ const Wishlist = ({route, navigation}: Props) => {
                   location={property.location}
                   price={property.price}
                   images={imageMap[property.images[0]]}
-                  onPress={() => navigation.navigate('PropertyDetails', {propertyId: property.id, data: property})}
+                  onPress={() => navigation.navigate('PropertyDetails', {propertyId: property.id, data: property, getUserId: getCurrentUserId})}
                 />
               );
             }}
