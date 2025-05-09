@@ -20,7 +20,7 @@ const { width } = Dimensions.get('window');
 
 const PropertyDetailsScreen = ({route, navigation}: Props) => {
 
-    const {data} = route.params;
+    const {data, getUserId} = route.params;
 
     const loading = useTransitionLoading(navigation);
 
@@ -78,6 +78,7 @@ const PropertyDetailsScreen = ({route, navigation}: Props) => {
 
             <PropertyBottomTab
                 propertyData={data}
+                getUserId={getUserId}
                 addToWishlist={(item) => {
                     console.log("Added to wishlist: ", item)
                 }}/>
