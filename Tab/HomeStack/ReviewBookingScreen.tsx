@@ -1,4 +1,4 @@
-import React, { useContext} from 'react';
+import React, { useContext } from 'react';
 import { View, ScrollView } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../Types';
@@ -16,8 +16,7 @@ type Props = StackScreenProps<RootStackParamList, 'ReviewBookingScreen'>;
 const ReviewBookingScreen = ({route, navigation}: Props) => {
   const { theme } = useContext(ThemeContext);
   
-
-  const {property, startDate, endDate, numGuests} = route.params;
+  const {property, startDate, endDate, numGuests, getUserId} = route.params;
   let numOfDays;
   const startDateObj = new Date(startDate);
   const endDateObj = new Date(endDate);
@@ -60,7 +59,6 @@ const ReviewBookingScreen = ({route, navigation}: Props) => {
         numGuests={numGuests}
         numOfDays={numOfDays}
       />
-
         
       <View style={ExternalStyles.sectionContainer}>
         <MyButton
@@ -68,8 +66,8 @@ const ReviewBookingScreen = ({route, navigation}: Props) => {
           textStyle={{ color: 'white', fontWeight: 'bold' }}
           onPress={() => navigation.navigate('PaymentMethod', {
             propertyID: property.id, startDate: formatDate(startDateObj), endDate: formatDate(endDateObj), 
-            numGuests: numGuests, numDays: numOfDays
-          })}
+            numGuests: numGuests, numDays: numOfDays, getUserId: getUserId})
+          }
         />
       </View>
     </ScrollView>
