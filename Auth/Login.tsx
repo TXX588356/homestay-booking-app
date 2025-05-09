@@ -5,7 +5,7 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from "../Types";
 import { ExternalStyles } from "../Styles";
 import MyButton from "../components/MyButton";
-import { useRoute } from '@react-navigation/native';
+import { CommonActions, useRoute } from '@react-navigation/native';
 import { getDBConnection, createUser, validateUser, User, getUsers, updateUserForgotPassword } from "../db-service";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -41,6 +41,7 @@ const AuthScreen = ({ navigation }: Props) => {
     const [isNewUser, setIsNewUser] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [isForgotPassword, setIsForgotPassword] = useState(false);
+
 
     useEffect(() => {
         if (route.params?.mode === 'login') {
@@ -132,7 +133,18 @@ const AuthScreen = ({ navigation }: Props) => {
     
                 if (user) {
                     await AsyncStorage.setItem('currentUser', JSON.stringify(user));
-                    navigation.navigate('Main');
+                    //navigation.navigate('Main');
+
+
+                    //this can prevent user go back to the login screen again by pressing back button
+                    navigation.dispatch(
+                        CommonActions.reset({
+                            index: 0,
+                            routes: [{name: 'Main'}],
+                        })
+                    )
+                    
+                    
                 } else {
                     Alert.alert('Login Failed', 'Invalid email or password', [{ text: 'OK' }]);
                 }
