@@ -15,21 +15,22 @@ export type RootStackParamList = {
     startDate: string;
     endDate: string;
     numGuests: number;
+    getUserId: () => any;
   };
   PaymentMethod: {
-    property: any;
+    propertyID: any;
     startDate: string;
     endDate: string;
     numGuests: number;
-    numOfDays: number;
-    totalPrice: number;
+    numDays: number;
+    getUserId: () => any;
   }
   List: {display: string};
   Authentication: {display: string},
-  CategoryScreen: {catName: string},
-  PropertyDetails: {data: any};
+  CategoryScreen: {catName: string, getUserId: () => any;},
+  PropertyDetails: {data: any, propertyId: any, getUserId: () => any;};
   WelcomeScreen: {display: string},
-  BookingScreen: {property: any},
+  BookingScreen: {property: any, getUserId: () => any;},
   Wishlist: {property: any},
   AccountSettingScreen: {info: any},
 
