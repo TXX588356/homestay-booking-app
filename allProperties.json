@@ -3,7 +3,8 @@
       {
         "id": "b1",
         "name": "Bidong View Resort",
-        "location": "Kuala Lumpur",
+        "location": "Kuala Terengganu, Terengganu",
+        "address": "Lorong Gem Beach, Kampung Pagar Besi, 21020 Kuala Terengganu, Terengganu",
         "price": 98,
         "images": [
           "./img/beach1a.jpg",
@@ -19,8 +20,9 @@
     "Mountain": [
       {
         "id": "m1",
-        "name": "Blue Cabin",
-        "location": "Cameron Highlands",
+        "name": "Blue Cabins",
+        "location": "Cameron Highlands, Pahang",
+        "address": "No 8, Jalan Dahlia, Kampung Taman Sedia, 39000 Tanah Rata, Pahang",
         "price": 149,
         "images": [
           "./img/cabin1a.jpg",
@@ -36,8 +38,9 @@
     "City": [
       {
         "id": "c1",
-        "name": "KL Townhouse Villa",
-        "location": "Kuala Lumpur",
+        "name": "Lily and Loft",
+        "location": "Subang Jaya, Selangor",
+        "address": "3, Jalan USJ 2/6f, Usj 2, 47600 Subang Jaya, Selangor",
         "price": 199,
         "images": [
           "./img/villa1a.jpg",
@@ -46,15 +49,16 @@
         ],
         "category": "City",
         "recommended": true,
-        "amenities": ["WiFi", "Pool", "Kitchen", "Beach Access"],
-        "description": "Modern townhouse located in the heart of KL, perfect for urban living."
+        "amenities": ["WiFi", "Pool", "Kitchen", "Public Transport"],
+        "description": "Modern townhouse located in the heart of city, perfect for urban living."
       }
     ],
     "Camping": [
       {
         "id": "cg1",
         "name": "Gopeng Glamping Park",
-        "location": "Kuala Lumpur",
+        "location": "Gopeng, Perak",
+        "address": "LOT 10846, Jalan Besar, Kampung Chulek, 31600 Gopeng, Perak",
         "price": 139,
         "images": [
           "./img/camping1a.jpg",
@@ -72,6 +76,7 @@
         "id": "p1",
         "name": "Rick Resort Teluk Intan",
         "location": "Teluk Intan, Perak",
+        "address": "Lot 31156, Jalan Woo Saik Hong, Taman Tow Yuan, 36000 Teluk Intan, Perak",
         "price": 60,
         "images": [
           "./img/pool1a.jpg",
@@ -87,6 +92,7 @@
         "id": "p2",
         "name": "Villa Dracaena",
         "location": "Bukit Katil, Malacca",
+        "address": "Lot 29322 Solok Balik Hutan Bukit Katil, 75450 Ayer Keroh, Melaka",
         "price": 120,
         "images": [
           "./img/pool2a.jpg",
