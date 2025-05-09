@@ -16,9 +16,9 @@ const TripDetails = ({route, navigation}: any) => {
   const paymentMethod = booking.paymentMethod === 'card' ? "Credit Card" : "FPX Online Banking";
 
   const openMap = (propertyName: string) => { 
-          const mapLink = createMapLink({ provider: 'google', query: propertyName });
-          Linking.openURL(mapLink);
-      }
+      const mapLink = createMapLink({ provider: 'google', query: propertyName });
+      Linking.openURL(mapLink);
+  }
 
   return (
     <ScrollView style={{backgroundColor: theme.background, flex: 1}}>
