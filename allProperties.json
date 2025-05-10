@@ -34,7 +34,44 @@
         "amenities": ["Sea View", "Shared Sauna", "WiFi", "Ocean View"],
         "description": "This is the one & only 1 Bed Studio with 2 large balconies for you to indulge in the enchanted sea view! Also, you can enjoy the high privacy and convenience to park your car right in front of your doorstep.",
         "facilities": "1 queen bed · 2 baths · 1 living room"
+      },
+
+      {
+        "id": "b3",
+        "name": "Aneeda Inn",
+        "location": "Langkawi",
+        "address": "LOT 908, JALAN BOHOR TEMPOYAK, KAMPUNG LUBOK BUAYA, MUKIM KEDAWANG, PANTAI CHENANG, 07000 Pantai Cenang, Malaysia",
+        "price": 270,
+        "images": [
+          "./img/beach3a.jpg",
+          "./img/beach3b.jpg",
+          "./img/beach3c.jpg"
+        ],
+        "category": "Beach",
+        "recommended": false,
+        "amenities": ["Swimming Pool", "Free Parking", "WiFi", "Sea View"],
+        "description": "Located 4 km from Langkawi International Airport, the motel is an 8-minute walk from Cenang Beach and near attractions such as Laman Padi Langkawi and Underwater World Langkawi.",
+        "facilities": "2 queen bed · 2 baths · 1 living room"
+      },
+
+      {
+        "id": "b4",
+        "name": "PD D'Wharf Residence Studio",
+        "location": "Port Dickson, Malaysia",
+        "address": "LOT 908, JALAN BOHOR TEMPOYAK, KAMPUNG LUBOK BUAYA, MUKIM KEDAWANG, PANTAI CHENANG, 07000 Pantai Cenang, Malaysia",
+        "price": 220,
+        "images": [
+          "./img/beach4a.jpg",
+          "./img/beach4b.jpg",
+          "./img/beach4c.jpg"
+        ],
+        "category": "Beach",
+        "recommended": false,
+        "amenities": ["Swimming Pool", "Air Conditioning", "WiFi", "Sea View"],
+        "description": "Superb pricing , rare deal in town. Giving it a great environment for couples or small family group. ",
+        "facilities": "1 bed · 1 bath"
       }
+
       
     ],
 
@@ -59,7 +96,7 @@
 
       {
         "id": "m2",
-        "name": "Mountain View Homestay",
+        "name": "Desa Flora Homestay",
         "location": "Seremban",
         "address": "No.94, lorong desa flora 1/14, taman desa flora 2, 70450 Seremban, Malaysia",
         "price": 119,
@@ -79,7 +116,7 @@
         "id": "m3",
         "name": "Hidden Hill Kundasang",
         "location": "Mount Kinabalu",
-        "address": "No.94, lorong desa flora 1/14, taman desa flora 2, 70450 Seremban, Malaysia",
+        "address": "Hidden Hill Kundasang, Sabah, Mount Kinabalu",
         "price": 419,
         "images": [
           "./img/mountain3a.jpg",
@@ -111,6 +148,24 @@
         "recommended": true,
         "amenities": ["WiFi", "Pool", "Kitchen", "Public Transport"],
         "description": "Modern townhouse located in the heart of city, perfect for urban living.",
+        "facilities": "3 bedrooms · 2 baths"
+      },
+
+      {
+        "id": "c2",
+        "name": "The Opposite Place",
+        "location": "Melaka",
+        "address": "18 Jalan Hang Lekiu, 75200 Melaka, Malaysia",
+        "price": 219,
+        "images": [
+          "./img/city2a.jpg",
+          "./img/city2b.jpg",
+          "./img/city2c.jpg"
+        ],
+        "category": "City",
+        "recommended": true,
+        "amenities": ["WiFi", "Serene Garden", "Outdoor Seating Area", "Hot Tub"],
+        "description": "convenient location, beautiful garden, and excellent service, The Opposite Place provides a relaxing retreat in Melaka.",
         "facilities": "3 bedrooms · 2 baths"
       }
     ],
