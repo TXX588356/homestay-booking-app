@@ -23,6 +23,7 @@
     "react-native": "0.73.0",
     "react-native-gesture-handler": "2.14",
     "react-native-indicators": "^0.17.0",
+    "react-native-open-maps": "^0.4.3",
     "react-native-paper": "^5.13.1",
     "react-native-reanimated": "3.6",
     "react-native-reanimated-carousel": "^4.0.2",
@@ -30,7 +31,8 @@
     "react-native-screens": "3.29",
     "react-native-sqlite-storage": "^6.0.1",
     "react-native-ui-datepicker": "^3.1.2",
-    "react-native-vector-icons": "^10.2.0"
+    "react-native-vector-icons": "^10.2.0",
+    "socket.io-client": "^4.8.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
