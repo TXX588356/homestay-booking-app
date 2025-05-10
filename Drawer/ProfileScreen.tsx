@@ -1,5 +1,5 @@
-import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
+import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { ExternalStyles } from '../Styles'
 import {Avatar, Title, Caption, TouchableRipple } from 'react-native-paper'; 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -158,17 +158,25 @@ const Profile = () => {
       </View>
 
       <View style={ExternalStyles.infoBoxWrapper}>
-        <View style={[ExternalStyles.infoBox, {
+        <TouchableOpacity 
+          onPress={() => {
+            if (navigation.canGoBack()) {
+              navigation.navigate('Home', { screen: 'Trip' });
+            } else {
+              navigation.navigate('Trip', { screen: 'TripScreen' });
+            }
+          }}
+          style={[ExternalStyles.infoBox, {
           borderRightColor: '#dddddd', 
           borderRightWidth: 1
           }]}>
           <ThemedText style={{fontSize: 20, fontWeight: 'bold'}}>{numTrips}</ThemedText>
           <ThemedText>Trips</ThemedText>
-        </View>
-        <View style={ExternalStyles.infoBox}>
+        </TouchableOpacity>
+        <TouchableOpacity style={ExternalStyles.infoBox} onPress={() => navigation.navigate('Home', { screen: 'Wishlist' })}>
           <ThemedText style={{fontSize: 20, fontWeight: 'bold'}}>{numWishlist}</ThemedText>
           <ThemedText>Wishlists</ThemedText>
-        </View>
+        </TouchableOpacity>
       </View>
 
       <View style={{alignItems: 'center'}}>
