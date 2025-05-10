@@ -128,43 +128,6 @@ const PaymentMethodScreen = ({route, navigation}: Props) => {
         .catch((error) => {
           console.error('Error:', error);
         })
-
-      /*
-      AsyncStorage.getItem('currentUser')
-      .then((userString) => {
-        if (userString) {
-          const {propertyID, startDate, endDate, numGuests, numDays} = route.params;
-          const user = JSON.parse(userString);
-          const userID = user.id;
-          
-
-          const bookingData = {
-            userID: parseInt(userID),
-            propertyID,
-            startDate,
-            endDate,
-            numGuests,
-            numDays,
-            paymentMethod: selectedMethod
-          };
-
-          fetch(`${config.settings.bookingServerPath}/api/bookingHistory`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(bookingData),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log('Booking created:', data);
-            })
-            .catch((error) => {
-              console.error('Error:', error);
-            })
-      }})
-      .catch((error) => {
-        console.error('Error reading AsyncStorage:', error);
-      });
-      */
     };
 
     const renderContent = () => {
