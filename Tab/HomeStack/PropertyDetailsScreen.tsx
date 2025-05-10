@@ -53,6 +53,7 @@ const PropertyDetailsScreen = ({route, navigation}: Props) => {
                 <View style={ExternalStyles.descContainer}>
                     <ThemedText style={ExternalStyles.sectionTitle}>About this place</ThemedText>
                     <ThemedText style={{fontFamily: 'Montserrat-Medium'}}>{data.description}</ThemedText>
+                    <ThemedText style={[ExternalStyles.subTitle, {color: 'grey', marginTop: 20}]}>{data.facilities}</ThemedText>
 
                 </View>
 
