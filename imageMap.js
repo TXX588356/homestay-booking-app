@@ -11,6 +11,14 @@ const cabin1a = require('./img/cabin1a.jpg');
 const cabin1b = require('./img/cabin1b.jpg');
 const cabin1c = require('./img/cabin1c.jpg');
 
+const mountain2a = require('./img/mountain2a.jpg');
+const mountain2b = require('./img/mountain2b.jpg');
+const mountain2c = require('./img/mountain2c.jpg');
+
+const mountain3a = require('./img/mountain3a.jpg');
+const mountain3b = require('./img/mountain3b.jpg');
+const mountain3c = require('./img/mountain3c.jpg');
+
 const villa1a = require('./img/villa1a.jpg');
 const villa1b = require('./img/villa1b.jpg');
 const villa1c = require('./img/villa1c.jpg');
@@ -39,6 +47,14 @@ export const imageMap = {
   './img/cabin1a.jpg': cabin1a,
   './img/cabin1b.jpg': cabin1b,
   './img/cabin1c.jpg': cabin1c,
+
+  './img/mountain2a.jpg': mountain2a,
+  './img/mountain2b.jpg': mountain2b,
+  './img/mountain2c.jpg': mountain2c,
+
+  './img/mountain3a.jpg': mountain3a,
+  './img/mountain3b.jpg': mountain3b,
+  './img/mountain3c.jpg': mountain3c,
 
   "./img/villa1a.jpg": villa1a,
   "./img/villa1b.jpg": villa1b,

@@ -55,7 +55,45 @@
         "amenities": ["WiFi", "Fireplace", "Kitchen", "Hiking Trails"],
         "description": "Cozy cabin in the mountains with breathtaking views.",
         "facilities": "2 bedrooms · 3 baths"
+      },
+
+      {
+        "id": "m2",
+        "name": "Mountain View Homestay",
+        "location": "Seremban",
+        "address": "No.94, lorong desa flora 1/14, taman desa flora 2, 70450 Seremban, Malaysia",
+        "price": 119,
+        "images": [
+          "./img/mountain2a.jpg",
+          "./img/mountain2b.jpg",
+          "./img/mountain2c.jpg"
+        ],
+        "category": "Mountain",
+        "recommended": false,
+        "amenities": ["WiFi", "BBQ facilities", "Kitchen", "Balcony"],
+        "description": "Enjoy a garden and terrace, perfect for relaxation. The terrace includes a balcony with mountain views, while the garden provides a serene setting.",
+        "facilities": "2 bedrooms · 3 baths · 1 dining area"
+      },
+
+      {
+        "id": "m3",
+        "name": "Hidden Hill Kundasang",
+        "location": "Mount Kinabalu",
+        "address": "No.94, lorong desa flora 1/14, taman desa flora 2, 70450 Seremban, Malaysia",
+        "price": 419,
+        "images": [
+          "./img/mountain3a.jpg",
+          "./img/mountain3b.jpg",
+          "./img/mountain3c.jpg"
+        ],
+        "category": "Mountain",
+        "recommended": false,
+        "amenities": ["WiFi", "Valley View", "Kitchen", "Free Parking"],
+        "description": "Comfortably enjoy the open space living area and kitchen,  a private balcony view of Mount Kinabalu or a warm cup of coffee in hand for those early sunrise. Its kitchen is fully equipped, perfect for quaint warm meals.",
+        "facilities": "2 bedrooms · 3 beds · 1 bath"
       }
+
+
     ],
     "City": [
       {

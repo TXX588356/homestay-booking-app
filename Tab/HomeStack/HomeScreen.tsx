@@ -42,11 +42,7 @@ const App = ({ route, navigation }: Props) => {
         { cat: 'Pool', icon: 'swimming-pool', key: '5', iconColor: '#9C27B0', bgColor: '#E1BEE7' },
     ])
 
-    /* const [properties, setProperties] = useState([
-        {id: '1', name: 'Villa', location: 'Kuala Lumpur', price: 'RM199/night', image: require('../../img/villa.jpg')},
-        { id: '2', name: 'Cabin', location: 'Cameron Highlands', price: 'RM149 per night', image: require('../../img/cabin.jpg') },
-        { id: '3', name: 'Penthouse', location: 'Penang', price: 'RM299 per night', image: require('../../img/penthouse.jpg') },
-    ]); */
+
     const recommended = [
         ...allProperties.Beach.slice(0,1),
         ...allProperties.Mountain.slice(0,1),
