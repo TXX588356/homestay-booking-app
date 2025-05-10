@@ -17,58 +17,25 @@
         "description": "Enjoy this stunning beachfront villa with amazing ocean views.",
         "facilities": "3 bedrooms · 3 baths"
       },
+     
       {
         "id": "b2",
-        "name": "Tenang At Samsuria Beach Apartment",
-        "location": "Balok, Kampong Gebeng",
-        "address": "Lorong Gem Beach, Kampung Pagar Besi, 21020 Kuala Terengganu, Terengganu",
-        "price": 148,
+        "name": "Reco Homestay",
+        "location": "Port Dickson, Negeri Sembilan",
+        "address": "5th Mile, The Regency Beach Resort, B-6-6, Block B, Jalan Pantai, 71050 Port Dickson, Negeri Sembilan",
+        "price": 150,
         "images": [
           "./img/beach2a.jpg",
           "./img/beach2b.jpg",
           "./img/beach2c.jpg"
         ],
         "category": "Beach",
-        "recommended": true,
-        "amenities": ["Balcony", "Outdoor Swimming Pool", "Kitchen", "Sea View"],
-        "description": "Tenang At Samsuria Beach Apartment in Balok offers direct beachfront access with a private beach area. Guests enjoy sea views and a swimming pool with a view.",
-        "facilities": "2 bedrooms · 3 baths · 1 living room"
-      },
-      {
-        "id": "b3",
-        "name": "Wave N' Sea @ Imperium Residence",
-        "location": "Kuantan, Malaysia",
-        "address": "Waterfront Resort City, Imperium Residence (Next to Swiss Belhotel Kuantan, 1, Jalan Kampung Tanjung Lumpur, 26060 Kuantan, Pahang",
-        "price": 278,
-        "images": [
-          "./img/beach3a.jpg",
-          "./img/beach3b.jpg",
-          "./img/beach3c.jpg"
-        ],
-        "category": "Beach",
-        "recommended": true,
+        "recommended": false,
         "amenities": ["Sea View", "Shared Sauna", "WiFi", "Ocean View"],
-        "description": "Imperium Residence is a New skyscraper facing the seafront, joint with the Swiss Belhotel Kuantan and their facilities! This is the one & only 1 Bed Studio with 2 large balconies for you to indulge in the enchanted sea view! Also, you can enjoy the high privacy and convenience to park your car right in front of your doorstep.",
+        "description": "This is the one & only 1 Bed Studio with 2 large balconies for you to indulge in the enchanted sea view! Also, you can enjoy the high privacy and convenience to park your car right in front of your doorstep.",
         "facilities": "1 queen bed · 2 baths · 1 living room"
-      },
-      {
-        "id": "b4",
-        "name": "Tokido Executive Water Villa",
-        "location": "Kuantan, Malaysia",
-        "address": "Waterfront Resort City, Imperium Residence (Next to Swiss Belhotel Kuantan, 1, Jalan Kampung Tanjung Lumpur, 26060 Kuantan, Pahang",
-        "price": 278,
-        "images": [
-          "./img/beach4a.jpg",
-          "./img/beach4b.jpg",
-          "./img/beach4c.jpg"
-        ],
-        "category": "Beach",
-        "recommended": true,
-        "amenities": ["Sea View", "Shared Sauna", "WiFi", "Hot Tub"],
-        "description": "superb for a good get away from the busy lifestyle, great retreat for family or honeymoon",
-        "facilities": "1 bedroom · 2 beds · 1 bath"
       }
-
+      
     ],
 
     "Mountain": [
