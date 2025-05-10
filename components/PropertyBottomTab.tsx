@@ -20,38 +20,6 @@ const PropertyBottomTab = ({propertyData, addToWishlist, getUserId}: Props) => {
     const [liked, setLiked] = useState(false);
     const { theme } = useContext(ThemeContext);
 
-    /*
-    const fetchWishlistItemFromDB = () => {
-        AsyncStorage.getItem('currentUser')
-          .then((userString) => {
-            if (userString) {
-              const user = JSON.parse(userString);
-              const userID = parseInt(user.id);
-              const propertyID = String(propertyData.id);
-
-              fetch(`${config.settings.wishlistServerPath}/api/wishlist/user/${userID}/property/${propertyID}`)
-                .then((response) => {
-                  return response.json();
-                })
-                .then((data) => {
-                  console.log('Fetched wishlist item from database:', data);
-                  if (Object.keys(data).length !== 0) {
-                    // Current property is saved as wishlist in the database
-                    setLiked(true);
-                  }
-                })
-                .catch((error) => {
-                  console.error('Error fetching wishlist item:', error);
-                })
-            } else {
-              console.log('No user found in AsyncStorage');
-            }
-          })
-          .catch((error) => {
-            console.error('Error reading AsyncStorage:', error);
-          });
-      };
-      */
     const fetchWishlistItemFromDB = async () => {
       const userID = await getUserId();
       const propertyID = String(propertyData.id);
@@ -94,34 +62,6 @@ const PropertyBottomTab = ({propertyData, addToWishlist, getUserId}: Props) => {
             ToastAndroid.show('Removed from Wishlist', ToastAndroid.LONG);
         }
     };
-    
-    /*
-    const saveWishlistToDB = () => {
-      
-        AsyncStorage.getItem('currentUser')
-        .then((userString) => {
-          if (userString) {
-            const user = JSON.parse(userString);
-            const userID = user.id;
-  
-            fetch(`${config.settings.wishlistServerPath}/api/wishlist`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({userID: userID, propertyID: propertyData.id}),
-            })
-              .then((response) => response.json())
-              .then((data) => {
-                console.log('Wishlist added to database:', data);
-              })
-              .catch((error) => {
-                console.error('Error:', error);
-              })
-        }})
-        .catch((error) => {
-          console.error('Error reading AsyncStorage:', error);
-        });
-    };
-    */
 
     const saveWishlistToDB = async () => {
       const userID = await getUserId();
@@ -158,33 +98,6 @@ const PropertyBottomTab = ({propertyData, addToWishlist, getUserId}: Props) => {
         console.error('Error:', error);
       })
     };
-    /*
-      const removeWishlistFromDB = () => {
-      
-        AsyncStorage.getItem('currentUser')
-        .then((userString) => {
-          if (userString) {
-            const user = JSON.parse(userString);
-            const userID = user.id;
-  
-            fetch(`${config.settings.wishlistServerPath}/api/wishlist`, { 
-              method: 'DELETE',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({userID: userID, propertyID: propertyData.id}),
-            })
-              .then((response) => response.json())
-              .then((data) => {
-                console.log('Wishlist removed from database:', data);
-              })
-              .catch((error) => {
-                console.error('Error:', error);
-              })
-        }})
-        .catch((error) => {
-          console.error('Error reading AsyncStorage:', error);
-        });
-    };
-    */
 
     return (
         <View style={[ExternalStyles.bottomContainer, {backgroundColor: theme.background}]}>
