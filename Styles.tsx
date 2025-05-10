@@ -1,280 +1,194 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react'
+import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { ExternalStyles } from '../Styles'
+import {Avatar, Title, Caption, TouchableRipple } from 'react-native-paper'; 
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { User } from '../db-service';
+import { useIsFocused } from '@react-navigation/native'
+import { ThemeContext } from '../util/ThemeManager';
+import ThemedText from '../components/ThemedText';
+import config from '../config';
 
-const width = Dimensions.get('window').width;
+const Profile = () => {
+  const { theme } = useContext(ThemeContext);
+  
+  const navigation = useNavigation();
+  const [userData, setUserData] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [numTrips, setNumTrips] = useState(0);
+  const [numWishlist, setNumWishlist] = useState(0);
+  const isFocused = useIsFocused();
 
-export const ExternalStyles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff'
-    },
-    mainTitle: {
-        fontSize: 30,
-        fontFamily: 'Montserrat-Bold',
-        color: 'black'
-    },
-    SubHeader: {
-        backgroundColor: '#ff5a5f',
-    },
-    headerText: {
-        fontSize: 25,
-        fontWeight: 'bold',
-        fontFamily: 'Montserrat-Bold',
-    },
-    subHeaderText: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginTop: 10,
-        marginBottom: 10,
-        fontFamily: 'Montserrat-Bold',
-    },
-    titleText: {
-        fontSize: 25,
-        fontFamily: 'Montserrat-Bold',
-    },
-    subTitle: {
-        fontFamily: 'Montserrat-Medium'
-    },
-    inputContainer: {
-        marginBottom: 10,
-    },
-    
-    input: {
-        height: 50,
-        borderWidth: 1,
-        borderColor: '#dddddd',
-        borderRadius: 8,
-        backgroundColor: '#f8f8f8',
-        paddingHorizontal: 10,
-    },
+  useEffect(() => {
+    const fetchUser = async() => {
+      try{
+        setLoading(true);
+        const userDataString = await AsyncStorage.getItem('currentUser');
 
-    sectionTitle: {
-        fontSize: 18,
-        fontFamily: 'Montserrat-Bold', 
-    },
-    label: {
-        fontFamily: 'Montserrat-Medium',
-        fontWeight: '700',
-    },
+        if(userDataString) {
+          const userData = JSON.parse(userDataString);
+          setUserData(userData);
+        }
+      }catch(error){
+        console.error("Error in fetching user data: ", error);
+      }finally{
+        setLoading(false);
+      }
+    }
 
-    authLabel: {
-        fontSize: 16,
-        fontWeight: '500',
-        marginBottom: 8,
-        fontFamily: 'Montserrat-Bold'
-    },
+    if(isFocused) {
+      fetchUser();
+    }
+  }, [isFocused])
 
-    loginText: {
-        color: '#ff5a5f',
-        fontWeight: 'bold',
-        marginLeft: 5,
-        fontFamily: 'Montserrat-Regular'
-    },
+  // Start fetching only after the userData is set
+  useEffect(() => {
+    if (userData) {
+      fetchNumWishlist();
+      fetchNumTrips();
+    }
+  }, [userData]);
 
-    row: {
-        flexDirection: 'row',
-        marginBottom: 15,
-        paddingTop: 10,
-        paddingBottom: 10,
-    },
-    infoBox: {
-        width: '50%',
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
+ const fetchNumWishlist = () => {
+    setLoading(true);
+    fetch(`${config.settings.wishlistServerPath}/api/wishlist/user/${userData.id}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch num of wishlist');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setNumWishlist(data.length);
+      })
+      .catch((error) => {
+        console.error('Error fetching num of wishlist:', error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
-      infoBoxWrapper: {
-        borderTopColor: '#dddddd',
-        borderBottomColor: '#dddddd',
-        borderTopWidth: 1,
-        borderBottomWidth: 1,
-        flexDirection: 'row',
-        height: 100,
-      },
-
-   /*  searchArea: {
-        marginTop: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
-        height: 45,
-        backgroundColor: '#fff',
-        borderRadius: 20, 
-        paddingHorizontal: 15,
-        fontSize: 16,
-        elevation: 4, 
-        shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-    }, */
-
-    button: {
-        backgroundColor: '#ff5a5f',
-        padding: 15,
-        alignItems: 'center',
-        marginTop: 30,
-        marginBottom: 20,
-        borderRadius: 8,
-    },
-    imageContainer: {
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingHorizontal: 5,
-      },
-      dotContainer: {
-          flexDirection: 'row',
-          justifyContent: 'center',
-          marginTop: 10,
-      },
-
-    propertyName: {
-        color: 'black',
-        fontSize: 15,
-        fontFamily: 'Montserrat-Bold'
-    },
-    propertyPrice: {
-        color: "#ff5a5f",
-        fontFamily: 'Montserrat-Bold',
-    },
-    propertyLocation: {
-        color: 'grey',
-        fontFamily: 'Montserrat-Medium'
-    },
-    stayImage: {
-        height: 130,
-        width: "100%",
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-    },
-    CarouselImage: {
-        width: '100%',
-        height: width - 10,
-        resizeMode: 'cover',
-        borderRadius: 5,
-    },
-    propertyCardContainer: {
-        width: "95%",
-        height: 200,
-        elevation: 5,
-        borderRadius: 10,
-        marginVertical: 7,
-        backgroundColor: '#fff',
-        alignSelf: 'center',
-    },
-
-    priceRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginVertical: 5
-    },
-    totalRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: 15,
-        borderTopWidth: 1,
-        borderTopColor: '#ddd',
-        paddingTop: 10
-    },
-
-    dot: {
-        width: 8,
-        height: 8,
-        borderRadius: 4,
-        marginHorizontal: 5,
-    },
-    activeDot: {
-        backgroundColor: 'grey',
-    },
-    inactiveDot: {
-        backgroundColor: '#ccc',
-    },
-    
-
-   
-
-
-    //PropertyDetails Screen
-    propertyTitle: {
-        alignItems: 'center',
-    }, 
-    ContainerWithUnderline: {
-        margin: 20,
-        paddingBottom: 10,
-        borderBottomColor: '#D3D3D3',
-        borderBottomWidth: 1
-    },
-    
-    sectionContainer: {
-        margin: 20,
-    },
-    selectedsectionContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderWidth: 1,
-        padding: 5,
-        borderColor: '#D3D3D3'
-    },
-    date: {
-        fontFamily: 'Montserrat-Medium',
-    },
-    descContainer: {
-        margin: 20,
-        paddingBottom: 10,
-        borderBottomColor: '#D3D3D3',
-        borderBottomWidth: 1
-    },
-    
-    backButtonContainer: {
-        position: 'absolute',
-        top: 10,
-        left: 10,
-        zIndex: 10,
-      },
+  const fetchNumTrips = () => {
+    setLoading(true);
+    fetch(`${config.settings.bookingServerPath}/api/bookingHistory/user/${userData.id}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch num of trips');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setNumTrips(data.length);
+      })
+      .catch((error) => {
+        console.error('Error fetching num of trips:', error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+ 
+  const handleLogout = async () => {
+    try {
+      await AsyncStorage.removeItem('currentUser');
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'Auth'}],
+      });
       
-    backButton: {
-    backgroundColor: 'rgba(205, 192, 192, 0.5)',
-    padding: 8,
-    borderRadius: 20,
-    },
+    }catch(error){
+      console.error("Error during logout: ", error);
+    }
+  }
 
-    bottomContainer: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: 0,
-        height: 60,
-        backgroundColor: '#fff',
-        borderTopWidth: 1,
-        borderTopColor: '#ccc',
-        justifyContent: 'center',
-        paddingLeft: 20,
-    },
-    innerContainer: {
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    bookButton: {
-        height: 35,
-        backgroundColor: '#FF385C',
-        width: 100,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 8,
+  if(loading) {
+    return (
+      <View style={[ExternalStyles.container, { justifyContent: 'center', alignItems: 'center' }]}>
+        <ActivityIndicator size="large" color="#ff5a5f" />
+      </View>
+    )
+  }
 
-    },
-    buttonText: {
-        fontWeight: 'bold',
-        justifyContent: 'center',
-        color: '#fff',
-        fontFamily: 'Montserrat-Regular',
+  return (
+    <View style={[ExternalStyles.container, {backgroundColor: theme.background}]}>
+      <View style={{marginBottom: 25, paddingHorizontal: 30,}}>
+        <View style={{flexDirection: 'row', marginTop: 20}}>
+          <Avatar.Image
+            source={require('../img/cat.png')}
+            size={80}
+          />
+          <View style={{marginLeft: 25}}>
+            <Title style={[{fontSize: 16, fontWeight: 'bold',marginTop: 10, color: theme.text}]}>{userData.name}</Title>
+            <Caption style={{color: theme.text}}>{userData.email}</Caption>
+          </View>
+        </View>
+      </View>
 
-    },
-    output: {
-        height: 400,
-        fontSize: 16,
-        marginTop: 10,
-        marginBottom: 10,
-        textAlignVertical: 'top',
-      },
+      <View style={{ marginBottom: 25, paddingHorizontal: 30,}}>
+        <View style={ExternalStyles.row}>
+          <Ionicons 
+          name='map'
+          size={24}
+          color="#777777"
+          marginRight={20}
+          />
+          <ThemedText>Malaysia</ThemedText>
+        </View>
+        <View style={ExternalStyles.row}>
+          <Ionicons 
+          name='mail'
+          size={24}
+          color="#777777"
+          marginRight={20}
+          />
+          <ThemedText>{userData.email}</ThemedText>
+        </View>
+        <View style={ExternalStyles.row}>
+          <Ionicons 
+          name='call'
+          size={24}
+          color="#777777"
+          marginRight={20}
+          />
+          <ThemedText>{userData.phoneNumber}</ThemedText>
+        </View>
+      </View>
 
-});
+      <View style={ExternalStyles.infoBoxWrapper}>
+        <TouchableOpacity 
+          onPress={() => {
+            if (navigation.canGoBack()) {
+              navigation.navigate('Home', { screen: 'Trip' });
+            } else {
+              navigation.navigate('Trip', { screen: 'TripScreen' });
+            }
+          }}
+          style={[ExternalStyles.infoBox, {
+          borderRightColor: '#dddddd', 
+          borderRightWidth: 1
+          }]}>
+          <ThemedText style={{fontSize: 20, fontWeight: 'bold'}}>{numTrips}</ThemedText>
+          <ThemedText>Trips</ThemedText>
+        </TouchableOpacity>
+        <TouchableOpacity style={ExternalStyles.infoBox} onPress={() => navigation.navigate('Home', { screen: 'Wishlist' })}>
+          <ThemedText style={{fontSize: 20, fontWeight: 'bold'}}>{numWishlist}</ThemedText>
+          <ThemedText>Wishlists</ThemedText>
+        </TouchableOpacity>
+      </View>
+
+      <View style={{alignItems: 'center'}}>
+        <TouchableOpacity 
+        style={[ExternalStyles.button, {width: "60%"}]}
+        onPress= {handleLogout}
+        >
+          <Text style={{color: 'white', fontWeight: 'bold'}}>Log Out</Text>                     
+        </TouchableOpacity>
+      </View>
+      
+    </View>
+  )
+}
+export default Profile;
