@@ -61,38 +61,7 @@ const Wishlist = ({route, navigation}: Props) => {
       .finally(() => {
         setLoading(false);
       });
-    /*
-    AsyncStorage.getItem('currentUser')
-      .then((userString) => {
-        if (userString) {
-          const user = JSON.parse(userString);
-          
-          fetch(`${config.settings.wishlistServerPath}/api/wishlist/user/${user.id}`)
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error('Failed to fetch wishlist');
-              }
-              return response.json();
-            })
-            .then((data) => {
-              setWishlist(data);
-            })
-            .catch((error) => {
-              console.error('Error fetching wishlist:', error);
-            })
-            .finally(() => {
-              setLoading(false);
-            });
-        } else {
-          console.log('No user found in AsyncStorage');
-          setLoading(false);
-        }
-      })
-      .catch((error) => {
-        console.error('Error reading AsyncStorage:', error);
-        setLoading(false);
-      });
-      */
+
   };
 
   useFocusEffect(
