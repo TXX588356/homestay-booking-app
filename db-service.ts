@@ -87,19 +87,15 @@ export const createUser = async (db: SQLiteDatabase, user: User): Promise<boolea
     try {
         console.log(`Attempting to create user with email: ${user.email}`);
         
-        // Check if user with email already exists
+        //check if user with email already exists
         const existingUser = await getUserByEmail(db, user.email);
         if (existingUser) {
             console.log("User with this email already exists");
             return false;
         }
         
-        console.log("Email is unique, proceeding with user creation");
         const insertQuery = 'INSERT INTO users (name, email, password, phoneNumber) VALUES (?, ?, ?, ?)';
-        
-        console.log("Executing SQL:", insertQuery);
-        console.log("With values:", user.name, user.email, "[PASSWORD]", user.phoneNumber);
-        
+      
         const results = await db.executeSql(
             insertQuery, 
             [user.name, user.email, user.password, user.phoneNumber]
@@ -110,13 +106,11 @@ export const createUser = async (db: SQLiteDatabase, user: User): Promise<boolea
             console.log(`User creation result - rows affected: ${rowsAffected}`);
             return rowsAffected > 0;
         } else {
-            console.error("User creation failed: No results returned");
             return false;
         }
     } catch (error) {
-        console.error("Error creating user:", error);
+        console.error("Error creating user:", error); 
         
-        // Try to provide more specific error information
         if (error instanceof Error) {
             console.error("Error message:", error.message);
             console.error("Error stack:", error.stack);
